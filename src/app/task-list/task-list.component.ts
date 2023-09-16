@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ListType } from '../list-type';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-task-list',
@@ -7,13 +8,22 @@ import { ListType } from '../list-type';
   styleUrls: ['./task-list.component.css'],
 })
 export class TaskListComponent {
-  @Input() list: ListType[] = [];
-  @Output() newTask = new EventEmitter<string>();
-  @Output() deleteTaskId = new EventEmitter<Number>();
+  list: ListType[] = [];
+  dataService: DataService = inject(DataService);
+
   addNewTask = (task: string) => {
-    this.newTask.emit(task);
+    this.dataService.addData(task);
+    this.list = this.dataService.getAllData();
   };
   deleteTask = (id: Number) => {
-    this.deleteTaskId.emit(id);
+    this.dataService.deleteData(id);
+    this.list = this.dataService.getAllData();
   };
+  constructor() {
+    this.list = this.dataService.getAllData();
+  }
 }
+
+// @Input() list: ListType[] = [];
+// @Output() newTask = new EventEmitter<string>();
+// @Output() deleteTaskId = new EventEmitter<Number>();

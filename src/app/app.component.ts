@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ListType } from './list-type';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -8,20 +9,10 @@ import { ListType } from './list-type';
 })
 export class AppComponent {
   listValue: ListType[] = [];
-
+  dataService: DataService = inject(DataService);
   new: string | undefined;
 
-  updateData = (newTask: string) => {
-    this.listValue.push({
-      id: new Date().getTime(),
-      task: newTask,
-      complete: false,
-    });
-  };
-  deleteData = (data: Number) => {
-    this.listValue = this.listValue.filter(
-      (value: ListType) => value.id != data
-    );
-    //hey!
-  };
+  constructor() {
+    this.listValue = this.dataService.getAllData();
+  }
 }
