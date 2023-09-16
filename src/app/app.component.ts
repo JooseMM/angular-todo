@@ -22,5 +22,6 @@ export class AppComponent {
     this.listValue = this.listValue.filter(
       (value: ListType) => value.id != data
     );
+    //hey!
   };
 }
