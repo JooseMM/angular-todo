@@ -26,9 +26,5 @@ export class DataService {
   };
   deleteData = (data: Number) => {
     this.dataBase = this.dataBase.filter((value: ListType) => value.id != data);
-    // console.log(this.dataBase.length);
-    // console.log(`You want to delete ${data}`);
-    // this.dataBase = [];
-    // console.log(this.dataBase.length);
   };
 }
