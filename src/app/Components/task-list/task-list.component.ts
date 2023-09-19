@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { ListType } from '../list-type';
-import { DataService } from '../data.service';
+import { ListType } from '../../list-type';
+import { DataService } from '../../data.service';
 
 @Component({
   selector: 'app-task-list',
