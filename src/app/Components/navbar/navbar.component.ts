@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-navbar',
   template: `
     <nav
-      class="bg-light-blue flex justify-between px-8 pt-10 pb-8 | md:px-desktop-page-padding"
+      class="bg-light-blue flex justify-between px-8 pt-10 pb-10 | md:px-desktop-page-padding"
     >
       <a
         *ngIf="menuOpen == false"
