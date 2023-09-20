@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-navbar',
   template: `
     <nav
-      class="bg-light-blue flex justify-between px-8 pt-10 pb-10 | md:px-desktop-page-padding"
+      class="bg-light-blue flex justify-between px-8 pt-10 pb-10 | lg:justify-between lg:px-desktop-page-padding"
     >
       <a
         *ngIf="menuOpen == false"
@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
       <ul *ngIf="menuOpen" class="flex gap-14 text-very-dark-blue | md:hidden">
         <li>
           <a
-            routerLink="/"
+            routerLink="/home"
             routerLinkActive="font-bold"
             (click)="mobileMenuToggle()"
             >Home</a
@@ -56,7 +56,7 @@ import { Component } from '@angular/core';
         <li>
           <a
             class="hover:text-very-dark-blue/100"
-            routerLink="/"
+            routerLink="/home"
             routerLinkActive="font-bold text-very-dark-blue/100"
             >Home</a
           >
