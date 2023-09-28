@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
-  template: `<div class="w-full bg-very-dark-blue py-10">
-    <ul class="grid grid-cols-4 mx-auto max-w-2xl">
+  template: `<div class="w-full bg-very-dark-blue py-20 ">
+    <ul
+      class="flex flex-col space-y-8 justify-center items-center text-center | xl:items-start xl:space-y-0 xl:grid grid-cols-4 mx-auto max-w-2xl"
+    >
       <li class="flex flex-col text-white">
         <a class="font-bold mb-4" href="">Todo App</a>
         <span>Sep 2023</span>

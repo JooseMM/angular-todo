@@ -5,6 +5,7 @@ import { TaskListComponent } from './Components/task-list/task-list.component';
 import { HomeComponent } from './Components/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './Components/navbar/navbar.component';
+import { FooterComponent } from './Components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     TaskListComponent,
     HomeComponent,
     NavbarComponent,
+    FooterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
