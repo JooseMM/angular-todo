@@ -2,12 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Nunito Sans", sans-serif;
+html {
+  font-family: "Nunito Sans Variable", sans-serif;
+  background-color: #DEE6ED;
 }
+  
 
 @layer utilities {
   .text-shadow {
     text-shadow: 1px 1px 2px #7a5622;
   }
+  .background {
+    background-image: url("./assets/Images/bg-form-mobile.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 -0.5rem;
+  }
+
 }

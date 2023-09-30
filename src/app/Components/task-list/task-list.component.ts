@@ -11,14 +11,11 @@ export class TaskListComponent {
   list: ListType[] = [];
   dataService: DataService = inject(DataService);
 
-  addNewTask = (task: string) => {
-    this.dataService.addData(task);
-    this.list = this.dataService.getAllData();
-  };
   deleteTask = (id: Number) => {
     this.dataService.deleteData(id);
     this.list = this.dataService.getAllData();
   };
+
   constructor() {
     this.list = this.dataService.getAllData();
   }

@@ -1,9 +1,6 @@
-<label for="addTask">Add Task</label>
-<input type="text" id="addTask" placeholder="Ex: Wash dishes" #newTask />
-<button (click)="addNewTask(newTask.value)">Add task</button>
 <ul>
   <li *ngFor="let item of list">
-    {{ item.task }} {{ item.complete ? "completed" : null }}
+    <span>{{item.id}}</span><span>{{item.task}}</span><span>{{ item.complete ? "completed" : null }}</span>
     <button class="btn-delete" (click)="deleteTask(item.id)">Delete</button>
   </li>
 </ul>

@@ -13,8 +13,8 @@ module.exports = {
         "middle-blue": "#849AAD",
         "orange-btn": "#D8973C",
       },
-      padding: {
-        "desktop-page-padding": "10vw",
+      margin: {
+        "desktop-margin": "10vw",
       },
     },
   },
