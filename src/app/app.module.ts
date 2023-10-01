@@ -8,6 +8,7 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { ApplicationComponent } from './Components/pages/application/application.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { ApplicationComponent } from './Components/pages/application/application
     TaskFormComponent,
     ApplicationComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

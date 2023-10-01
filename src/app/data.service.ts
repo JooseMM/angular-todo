@@ -8,11 +8,20 @@ export class DataService {
   protected dataBase: ListType[] = [
     {
       id: new Date().getTime(),
-      task: 'something',
+      task: 'Clean the house',
+      complete: false,
+    },
+    {
+      id: new Date().getTime(),
+      task: 'Walk the dog',
       complete: false,
     },
   ];
   constructor() {}
+
+  submit(newTask: string) {
+    console.log(newTask);
+  }
 
   getAllData(): ListType[] {
     return this.dataBase;

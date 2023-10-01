@@ -1,6 +1,7 @@
-<ul>
-  <li *ngFor="let item of list">
-    <span>{{item.id}}</span><span>{{item.task}}</span><span>{{ item.complete ? "completed" : null }}</span>
-    <button class="btn-delete" (click)="deleteTask(item.id)">Delete</button>
-  </li>
-</ul>
+
+  <ul>
+    <li *ngFor="let item of list; let i = index" class="py-4 px-4 flex items-center">
+      <span class="font-black text-4xl mr-6">#{{i+1}}</span><span class="truncate max-w-[150px]">{{item.task}}</span>
+      <button class="btn-delete" (click)="deleteTask(item.id)">x</button>
+    </li>
+  </ul>
