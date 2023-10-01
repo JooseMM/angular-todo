@@ -8,7 +8,7 @@ export class DataService {
   protected dataBase: ListType[] = [
     {
       id: new Date().getTime(),
-      task: 'Clean the house',
+      task: 'Clean the house and take out the trash',
       complete: false,
     },
     {

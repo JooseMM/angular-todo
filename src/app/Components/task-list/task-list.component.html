@@ -1,7 +1,15 @@
 
-  <ul>
-    <li *ngFor="let item of list; let i = index" class="py-4 px-4 flex items-center">
-      <span class="font-black text-4xl mr-6">#{{i+1}}</span><span class="truncate max-w-[150px]">{{item.task}}</span>
-      <button class="btn-delete" (click)="deleteTask(item.id)">x</button>
+  <ul class="bg-white pt-10 space-y-4">
+    <li *ngFor="let item of list; let i = index" class="py-4 px-6 mx-auto flex items-center bg-soft-gray rounded-md w-11/12 text-dark-blue">
+      <span class="text-very-dark-blue font-black text-3xl mr-6">#{{i+1}}</span>
+      <div class="flex justify-between items-center basis-full">
+      <span class="truncate max-w-[150px]">{{item.task}}</span>
+      <button class="btn-delete"><img src="../../../assets/Icons/task-list-detail-btn.svg" alt="more datails" #openDetails></button>
+      <div [hidden]="openDetails">
+
+      </div>
+
+      </div>
     </li>
   </ul>
+<!-- (click)="deleteTask(item.id)" -->

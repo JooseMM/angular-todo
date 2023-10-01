@@ -12,6 +12,7 @@ module.exports = {
         "very-dark-blue": "#263140",
         "middle-blue": "#849AAD",
         "orange-btn": "#D8973C",
+        "soft-gray": "#D5D9DD",
       },
       margin: {
         "desktop-margin": "10vw",
