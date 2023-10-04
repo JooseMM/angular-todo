@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { ListType } from '../list-type';
-import { DataService } from '../data.service';
+import { ListType } from '../../list-type';
+import { DataService } from '../../data.service';
 
 @Component({
   selector: 'app-task-form',
@@ -10,7 +10,7 @@ import { DataService } from '../data.service';
     <form
       (submit)="submit()"
       #basicForm="ngForm"
-      class="py-6  w-[90%] rounded-md background drop-shadow-2xl"
+      class="py-6  w-[90%] rounded-lg background drop-shadow-2xl"
     >
       <label for="new-task"
         ><h1 class="text-2xl font-medium text-white italic pl-4">

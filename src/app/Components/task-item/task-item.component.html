@@ -1,0 +1,41 @@
+<li    class="mb-6 py-4 px-6 mx-auto flex bg-soft-gray rounded-md w-11/12 text-dark-blue"
+      >
+        <span class="text-very-dark-blue font-black text-4xl mr-6"
+          >#{{  id + 1 }}</span
+        >
+        <div
+          class="flex justify-between items-center flex-wrap basis-full gap-y-6"
+        >
+          <span [class]="showDetails ? 'mt-2' : 'truncate max-w-[150px]'">{{
+            item.task
+          }}</span>
+          <!-- hidden details div -->
+          <div
+            [class]="
+              showDetails ? 'flex basis-9/12 justify-end items-end mb-2 ' : 'hidden'
+            "
+          >
+            <div
+              class="flex justify-center items-center bg-very-dark-blue px-4 py-2 rounded-md space-x-6"
+            >
+              <button>
+                <img
+                  src="../../../assets/Icons/delete-icon-task.svg"
+                  alt="delete task button"
+                />
+              </button>
+              <button>
+                <img src="../../../assets/Icons/done-icon-task.svg" alt="" />
+              </button>
+            </div>
+          </div>
+          <button>
+            <img
+              [class.rotate-180]="showDetails"
+              src="../../../assets/Icons/task-list-detail-btn.svg"
+              alt="more datails"
+              (click)="toggleDiv()"
+            />
+          </button>
+        </div>
+      </li>

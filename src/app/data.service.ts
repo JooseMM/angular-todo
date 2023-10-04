@@ -13,7 +13,7 @@ export class DataService {
     },
     {
       id: new Date().getTime(),
-      task: 'Walk the dog',
+      task: 'Get a goth thick babe, nigga damn!',
       complete: false,
     },
   ];

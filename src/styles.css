@@ -15,32 +15,8 @@ html {
   .background {
     background-image: url("./assets/Images/bg-form-mobile.svg");
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0 -0.5rem;
+    background-size:cover;
+    background-position:center;
   }
-  /* ul {
-  color: black;
-  list-style: none;
-  padding: 0;
-  margin-inline: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-li {
-  margin-top: 3rem;
-  background-color: aliceblue;
-  border-radius: 0.2rem;
-  padding-block: 1.5rem;
-  padding-inline: 2rem;
-}
-
-.btn-delete {
-  margin-left: 1.5rem;
-  padding-inline: 1rem;
-  padding-block: 0.3rem;
-} */
-
 
 }
