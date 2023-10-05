@@ -6,26 +6,26 @@ import { TaskItemComponent } from '../task-item/task-item.component';
 @Component({
   selector: 'app-task-list',
   template: `<ul class="bg-white pt-8 pb-2">
-      <app-task-item
-        *ngFor="let listItem of list; let i = index"
-        [item]="listItem"
-        [id]="i"
-      ></app-task-item>
-    </ul>
-    <!-- (click)="deleteTask(item.id)" -->`,
+    <app-task-item
+      *ngFor="let listItem of list; let i = index"
+      [item]="listItem"
+      [index]="i"
+      (taskID)="deleteTask($event)"
+    ></app-task-item>
+  </ul>`,
 })
 export class TaskListComponent {
   list: ListType[] = [];
   dataService: DataService = inject(DataService);
 
-  deleteTask = (id: Number) => {
-    this.dataService.deleteData(id);
-    this.list = this.dataService.getAllData();
-  };
-
   constructor() {
     this.list = this.dataService.getAllData();
   }
+  deleteTask = (id: Number) => {
+    console.log('this is click!');
+    this.dataService.deleteData(id);
+    this.list = this.dataService.getAllData();
+  };
 }
 
 // @Input() list: ListType[] = [];

@@ -1,12 +1,17 @@
 <li    class="mb-6 py-4 px-6 mx-auto flex bg-soft-gray rounded-md w-11/12 text-dark-blue"
       >
         <span class="text-very-dark-blue font-black text-4xl mr-6"
-          >#{{  id + 1 }}</span
+          >
+          <h4 *ngIf="!item.complete; else elseElement">#{{  index + 1 }}</h4>
+          <ng-template #elseElement>
+            <img src="../../../assets/Icons/completed-icon-task.svg" alt="Task completed">
+          </ng-template>
+          </span
         >
         <div
           class="flex justify-between items-center flex-wrap basis-full gap-y-6"
         >
-          <span [class]="showDetails ? 'mt-2' : 'truncate max-w-[150px]'">{{
+          <span [class]="" [class.opacity-50]="item.complete" >{{
             item.task
           }}</span>
           <!-- hidden details div -->
@@ -18,18 +23,18 @@
             <div
               class="flex justify-center items-center bg-very-dark-blue px-4 py-2 rounded-md space-x-6"
             >
-              <button>
+              <button (click)="targetTask(item.id)">
                 <img
                   src="../../../assets/Icons/delete-icon-task.svg"
-                  alt="delete task button"
+                  alt="delete this task"
                 />
               </button>
               <button>
-                <img src="../../../assets/Icons/done-icon-task.svg" alt="" />
+                <img src="../../../assets/Icons/done-icon-task.svg" alt="mark as complete" />
               </button>
             </div>
           </div>
-          <button>
+          <button *ngIf="!item.complete" >
             <img
               [class.rotate-180]="showDetails"
               src="../../../assets/Icons/task-list-detail-btn.svg"
@@ -39,3 +44,4 @@
           </button>
         </div>
       </li>
+<!-- showDetails ? 'mt-2' : 'truncate max-w-[150px]' -->

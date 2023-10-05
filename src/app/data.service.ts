@@ -7,14 +7,14 @@ import { ListType } from './list-type';
 export class DataService {
   protected dataBase: ListType[] = [
     {
-      id: new Date().getTime(),
+      id: new Date().getTime() + 5,
       task: 'Clean the house and take out the trash',
       complete: false,
     },
     {
       id: new Date().getTime(),
       task: 'Get a goth thick babe, nigga damn!',
-      complete: false,
+      complete: true,
     },
   ];
   constructor() {}
