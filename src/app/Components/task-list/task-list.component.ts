@@ -10,13 +10,11 @@ import { TaskItemComponent } from '../task-item/task-item.component';
       class="bg-white pt-8 pb-4 | lg:grid lg:grid-cols-3 lg:pt-20 lg:mx-auto lg:max-w-5xl lg:gap-x-8  "
     >
       <app-task-item
-        [class.lg:hover:col-span-2]="i != 2"
-        [class]="
-          i === 2
-            ? 'lg:hover:col-start-2 lg:hover:col-span-2 lg:hover:row-start-1'
-            : null
-        "
+        class="mb-6 py-4 px-6 mx-auto bg-soft-gray rounded-md w-[90%] text-dark-blue |  lg:mx-0 lg:py-0 lg:w-full lg:items-center lg:hover:col-span-2"
         *ngFor="let listItem of list; let i = index"
+        [class.lg:hover:col-start-2]="i === 2 && 5"
+        [class.lg:hover:row-start-1]="i === 2"
+        [class.lg:hover:row-start-2]="i === 5"
         [item]="listItem"
         [index]="i"
         (taskAction)="taskStateChange($event)"
@@ -27,7 +25,6 @@ import { TaskItemComponent } from '../task-item/task-item.component';
 export class TaskListComponent {
   list: ListType[] = [];
   dataService: DataService = inject(DataService);
-
   constructor() {
     this.list = this.dataService.getAllData();
   }
@@ -42,5 +39,3 @@ export class TaskListComponent {
     this.list = this.dataService.getAllData();
   };
 }
-
-// lg:hover:col-start-2 lg:hover:col-span-2 lg:hover:row-start-1

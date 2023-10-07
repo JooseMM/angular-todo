@@ -1,4 +1,4 @@
-<li   (hover)="toggleDiv()" class="mb-6 py-4 px-6 mx-auto flex bg-soft-gray rounded-md w-[90%] text-dark-blue | lg:h-24 lg:mx-0 lg:w-full" [class.py-5]="item.complete" [class.items-center]="!showDetails"
+<li  class="flex | lg:h-full lg:py-6" [class.py-5]="item.complete" [class.item-start]="showDetails" (mouseenter)="!item.complete? showDetails = true : null" (mouseleave)="showDetails = false" 
       >
         <span class="text-very-dark-blue font-black text-4xl mr-6 | lg:mr-5"
           >
@@ -9,17 +9,18 @@
           </span
         >
         <div
-          class="flex justify-between items-center flex-wrap basis-full gap-y-6"
+          class="flex justify-between items-center flex-wrap basis-full gap-y-6 lg:flex-nowrap"
         >
-          <span [class.opacity-50]="item.complete" [class]="showDetails ? 'mt-2' : ' truncate w-36 | lg:w-44 lg:hover:overflow-visible lg:hover:whitespace-normal' " >{{
+          <span [class.opacity-50]="item.complete"  [class]="showDetails ? 'mt-2 lg:mt-0' : ' truncate w-36 | lg:w-44'" >{{
             item.task
           }}</span>
           <!-- hidden details div -->
           <div
             [class]="
-              showDetails ? 'flex basis-9/12 justify-end items-end mb-2 ' : 'hidden'
+              showDetails ? 'flex basis-9/12 justify-end items-end mb-2 lg:basis-auto lg:items-center lg:mb-0'  : 'hidden'
             "
           >
+          <!-- buttons for handling task state -->
             <div
               class="flex justify-center items-center bg-very-dark-blue px-4 py-2 rounded-md space-x-6"
             >
@@ -34,6 +35,7 @@
               </button>
             </div>
           </div>
+          <!-- Button for showing more details about task -->
           <button *ngIf="!item.complete" class="lg:hidden">
             <img
               [class.rotate-180]="showDetails"
@@ -44,5 +46,3 @@
           </button>
         </div>
       </li>
-<!-- showDetails ? 'mt-2' : 'truncate max-w-[150px]' -->
-<!-- [class.w-36]=" !item.complete && !showDetails" -->

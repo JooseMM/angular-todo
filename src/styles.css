@@ -28,5 +28,11 @@ html {
       background-image: url("./assets/Images/bg-form-desktop.svg");
       background-position-y: 1px;
     }
+    
+  }
+  @layer components {
+    .open-details {
+      @apply bg-black
+    }
   }
 }

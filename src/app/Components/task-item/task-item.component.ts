@@ -8,11 +8,13 @@ import { ListType } from 'src/app/list-type';
 export class TaskItemComponent {
   @Input() item!: ListType;
   @Input() index!: number;
-  showDetails: boolean = false;
+  @Input() showDetails: boolean = false;
   @Output() taskAction = new EventEmitter<{ id: number; action: string }>();
+  @Output() muoseOn = new EventEmitter<boolean>();
 
   toggleDiv = () => {
     this.showDetails = !this.showDetails;
+    this.muoseOn.emit(this.showDetails);
   };
 
   targetTask = (id: number, action: string) => {
