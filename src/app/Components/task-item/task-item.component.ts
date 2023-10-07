@@ -9,22 +9,14 @@ export class TaskItemComponent {
   @Input() item!: ListType;
   @Input() index!: number;
   showDetails: boolean = false;
-  @Output() taskID = new EventEmitter<number>();
-
-  logic = (): string => {
-    let completedTaskClass: string = 'opacity-50';
-    if (this.item.complete) {
-      return 'mt-2';
-    } else {
-      return 'truncate max-w-[150px]';
-    }
-  };
+  @Output() taskAction = new EventEmitter<{ id: number; action: string }>();
 
   toggleDiv = () => {
     this.showDetails = !this.showDetails;
   };
 
-  targetTask = (id: number) => {
-    this.taskID.emit(id);
+  targetTask = (id: number, action: string) => {
+    let task = { id, action };
+    this.taskAction.emit(task);
   };
 }

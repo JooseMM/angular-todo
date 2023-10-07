@@ -1,17 +1,17 @@
-<li    class="mb-6 py-4 px-6 mx-auto flex bg-soft-gray rounded-md w-11/12 text-dark-blue"
+<li    class="mb-6 py-4 px-6 mx-auto flex bg-soft-gray rounded-md w-[90%] text-dark-blue | lg:h-24 lg:mx-0 lg:w-full lg:hover:row-span-3" [class.py-5]="item.complete" [class.items-center]="!showDetails"
       >
-        <span class="text-very-dark-blue font-black text-4xl mr-6"
+        <span class="text-very-dark-blue font-black text-4xl mr-6 | lg:mr-5"
           >
           <h4 *ngIf="!item.complete; else elseElement">#{{  index + 1 }}</h4>
           <ng-template #elseElement>
-            <img src="../../../assets/Icons/completed-icon-task.svg" alt="Task completed">
+            <img src="../../../assets/Icons/completed-icon-task.svg" alt="Task completed" class="lg:w-12">
           </ng-template>
           </span
         >
         <div
           class="flex justify-between items-center flex-wrap basis-full gap-y-6"
         >
-          <span [class]="" [class.opacity-50]="item.complete" >{{
+          <span [class.opacity-50]="item.complete" [class]="showDetails ? 'mt-2' : ' truncate w-36 | lg:w-44 lg:hover:overflow-visible lg:hover:whitespace-normal' " >{{
             item.task
           }}</span>
           <!-- hidden details div -->
@@ -23,18 +23,18 @@
             <div
               class="flex justify-center items-center bg-very-dark-blue px-4 py-2 rounded-md space-x-6"
             >
-              <button (click)="targetTask(item.id)">
+              <button (click)="targetTask(item.id, 'delete')">
                 <img
                   src="../../../assets/Icons/delete-icon-task.svg"
                   alt="delete this task"
                 />
               </button>
-              <button>
+              <button (click)="targetTask(item.id, 'completed')">
                 <img src="../../../assets/Icons/done-icon-task.svg" alt="mark as complete" />
               </button>
             </div>
           </div>
-          <button *ngIf="!item.complete" >
+          <button *ngIf="!item.complete" class="lg:hidden">
             <img
               [class.rotate-180]="showDetails"
               src="../../../assets/Icons/task-list-detail-btn.svg"
@@ -45,3 +45,4 @@
         </div>
       </li>
 <!-- showDetails ? 'mt-2' : 'truncate max-w-[150px]' -->
+<!-- [class.w-36]=" !item.complete && !showDetails" -->
