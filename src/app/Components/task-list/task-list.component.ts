@@ -7,9 +7,15 @@ import { TaskItemComponent } from '../task-item/task-item.component';
   selector: 'app-task-list',
   template: ` <div class="bg-white ">
     <ul
-      class="bg-white pt-8 pb-4 | lg:grid lg:grid-cols-3 lg:pt-20 lg:mx-auto lg:max-w-5xl lg:gap-x-8 lg:hover:row-span-3 "
+      class="bg-white pt-8 pb-4 | lg:grid lg:grid-cols-3 lg:pt-20 lg:mx-auto lg:max-w-5xl lg:gap-x-8  "
     >
       <app-task-item
+        [class.lg:hover:col-span-2]="i != 2"
+        [class]="
+          i === 2
+            ? 'lg:hover:col-start-2 lg:hover:col-span-2 lg:hover:row-start-1'
+            : null
+        "
         *ngFor="let listItem of list; let i = index"
         [item]="listItem"
         [index]="i"
@@ -36,4 +42,5 @@ export class TaskListComponent {
     this.list = this.dataService.getAllData();
   };
 }
-// lg:grid-cols-[350px_350px_350px]
+
+// lg:hover:col-start-2 lg:hover:col-span-2 lg:hover:row-start-1

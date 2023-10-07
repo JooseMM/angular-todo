@@ -1,4 +1,4 @@
-<li    class="mb-6 py-4 px-6 mx-auto flex bg-soft-gray rounded-md w-[90%] text-dark-blue | lg:h-24 lg:mx-0 lg:w-full lg:hover:row-span-3" [class.py-5]="item.complete" [class.items-center]="!showDetails"
+<li   (hover)="toggleDiv()" class="mb-6 py-4 px-6 mx-auto flex bg-soft-gray rounded-md w-[90%] text-dark-blue | lg:h-24 lg:mx-0 lg:w-full" [class.py-5]="item.complete" [class.items-center]="!showDetails"
       >
         <span class="text-very-dark-blue font-black text-4xl mr-6 | lg:mr-5"
           >
