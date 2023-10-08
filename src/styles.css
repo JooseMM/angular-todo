@@ -23,16 +23,14 @@ html {
   .split-background {
     background: linear-gradient(to bottom, #DEE6ED 70%, white 30%);
   }
+  
   @media only screen and (min-width: 1000px) {
     .background {
       background-image: url("./assets/Images/bg-form-desktop.svg");
       background-position-y: 1px;
-    }
-    
+    }    
   }
   @layer components {
-    .open-details {
-      @apply bg-black
-    }
+    
   }
 }
