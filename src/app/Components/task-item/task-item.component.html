@@ -1,6 +1,6 @@
-<li  class="flex bg-soft-gray py-4 mx-2 my-4 px-6 rounded-md text-dark-blue | lg:mx-auto lg:py-0 lg:h-full  lg:items-center" [class.py-5]="item.complete" [class.item-start]="showDetails" (click)="expandTask(index)" 
+<li  class="flex basis-full px-6 py-4  text-very-dark-blue | lg:py-8 lg:hover:cursor-pointer lg:mx-auto lg:w-full lg:h-full lg:items-center" [class.py-5]="item.complete" [class.item-start]="item.showDetails" (click)="expandTaskEvent(item.id)" 
       >
-        <span class="text-very-dark-blue font-black text-4xl mr-6 | lg:mr-5"
+        <span class=" font-black text-4xl mr-6 | lg:mr-5"
           >
           <h4 *ngIf="!item.complete; else elseElement">#{{  index + 1 }}</h4>
           <ng-template #elseElement>
@@ -9,19 +9,20 @@
           </span
         >
         <div
-          class="flex justify-between items-center flex-wrap basis-full gap-y-6 lg:flex-nowrap"
+          class="flex basis-full text-dark-blue gap-y-6 justify-between items-center | lg:flex-nowrap"
+          [class.flex-wrap]="item.showDetails"
         >
-          <span [class.opacity-50]="item.complete"  [class]="showDetails ? 'mt-2 lg:mt-0' : ' truncate w-36 | lg:w-44'" >{{
+          <span [class.opacity-50]="item.complete"  [class]="item.showDetails ? 'mt-2 lg:mt-0 lg:w-3/4' : 'truncate  | w-44 lg:w-[7vw] ' " >{{
             item.task
           }}</span>
           <!-- hidden details div -->
           <div
             [class]="
-              showDetails ? 'flex basis-9/12 justify-end items-end mb-2 lg:basis-auto lg:items-center lg:mb-0'  : 'hidden'
+              item.showDetails? 'flex basis-9/12 justify-end items-end mb-2 lg:basis-auto lg:items-center lg:mb-0'  : 'hidden'
             "
           >
           <!-- buttons for handling task state -->
-            <div
+            <div  
               class="flex justify-center items-center bg-very-dark-blue px-4 py-2 rounded-md space-x-6"
             >
               <button (click)="targetTask(item.id, 'delete')">
@@ -36,9 +37,10 @@
             </div>
           </div>
           <!-- Button for showing more details about task -->
-          <button *ngIf="!item.complete" class="lg:hidden">
+          <button *ngIf="!item.complete" >
             <img
-              [class.rotate-180]="showDetails"
+          
+              [ngClass]="item.showDetails ? 'rotate-180 lg:rotate-90' : 'rotate-0 lg:-rotate-90'"
               src="../../../assets/Icons/task-list-detail-btn.svg"
               alt="Show More datails"
             />

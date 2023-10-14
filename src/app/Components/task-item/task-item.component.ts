@@ -8,18 +8,11 @@ import { ListType } from 'src/app/list-type';
 export class TaskItemComponent {
   @Input() item!: ListType;
   @Input() index!: number;
-  @Input() showDetails: boolean = false;
   @Output() taskAction = new EventEmitter<{ id: number; action: string }>();
-  @Output() selectedTask = new EventEmitter<any>();
+  @Output() selectedTask = new EventEmitter<number>();
 
-  toggleDiv = () => {
-    this.showDetails = !this.showDetails;
-  };
-
-  expandTask = (index: number) => {
-    this.toggleDiv();
-    this.selectedTask.emit(index);
-    console.log(`Child ${index}`);
+  expandTaskEvent = (id: number) => {
+    this.selectedTask.emit(id);
   };
 
   targetTask = (id: number, action: string) => {

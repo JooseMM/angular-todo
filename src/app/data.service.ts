@@ -7,34 +7,40 @@ import { ListType } from './list-type';
 export class DataService {
   protected dataBase: ListType[] = [
     {
-      id: new Date().getTime() + 5,
+      id: new Date().getTime() + 10,
+      task: 'Clean the house and take out the trash ',
+      complete: false,
+      showDetails: false,
+    },
+    {
+      id: new Date().getTime() + 20,
+      task: 'Get a goth thick babe, nigga damn!',
+      complete: false,
+      showDetails: false,
+    },
+    {
+      id: new Date().getTime() + 50,
+      task: 'Get a goth thick',
+      complete: false,
+      showDetails: false,
+    },
+    {
+      id: new Date().getTime() + 100,
       task: 'Clean the house and take out the trash',
       complete: false,
+      showDetails: false,
     },
     {
-      id: new Date().getTime(),
+      id: new Date().getTime() + 75,
       task: 'Get a goth thick babe, nigga damn!',
       complete: false,
+      showDetails: false,
     },
     {
-      id: new Date().getTime(),
+      id: new Date().getTime() + 60,
       task: 'Get a goth thick babe, nigga damn!',
       complete: false,
-    },
-    {
-      id: new Date().getTime() + 5,
-      task: 'Clean the house and take out the trash',
-      complete: false,
-    },
-    {
-      id: new Date().getTime(),
-      task: 'Get a goth thick babe, nigga damn!',
-      complete: false,
-    },
-    {
-      id: new Date().getTime(),
-      task: 'Get a goth thick babe, nigga damn!',
-      complete: false,
+      showDetails: false,
     },
   ];
   constructor() {}
@@ -51,25 +57,48 @@ export class DataService {
       id: new Date().getTime(),
       task: newTask,
       complete: false,
+      showDetails: false,
     });
   };
   deleteData = (id: Number) => {
     this.dataBase = this.dataBase.filter((value: ListType) => value.id != id);
   };
-  completedTask = (id: number) => {
-    // let newArray : ListType = this.dataBase.map((value: ListType) => {
-    //   if (id === value.id) {
-    //     return (value.complete = true);
-    //   } else {
-    //     return value;
-    //   }
-    // });
-
+  setShowDetails = (id: Number) => {
     let newArray: ListType[] = this.dataBase.map((value) => {
       if (value.id === id) {
-        return { id: value.id, task: value.task, complete: true };
+        return {
+          id: value.id,
+          task: value.task,
+          complete: value.complete,
+          showDetails: !value.showDetails,
+        };
       } else {
-        return { id: value.id, task: value.task, complete: value.complete };
+        return {
+          id: value.id,
+          task: value.task,
+          complete: value.complete,
+          showDetails: false,
+        };
+      }
+    });
+    this.dataBase = [...newArray];
+  };
+  completedTask = (id: number) => {
+    let newArray: ListType[] = this.dataBase.map((value) => {
+      if (value.id === id) {
+        return {
+          id: value.id,
+          task: value.task,
+          complete: true,
+          showDetails: value.showDetails,
+        };
+      } else {
+        return {
+          id: value.id,
+          task: value.task,
+          complete: value.complete,
+          showDetails: value.showDetails,
+        };
       }
     });
     this.dataBase = [...newArray];
