@@ -1,4 +1,4 @@
-<li  class="flex | lg:h-full lg:py-6" [class.py-5]="item.complete" [class.item-start]="showDetails" (mouseenter)="!item.complete? showDetails = true : null" (mouseleave)="showDetails = false" 
+<li  class="flex bg-soft-gray py-4 mx-2 my-4 px-6 rounded-md text-dark-blue | lg:mx-auto lg:py-0 lg:h-full  lg:items-center" [class.py-5]="item.complete" [class.item-start]="showDetails" (click)="expandTask(index)" 
       >
         <span class="text-very-dark-blue font-black text-4xl mr-6 | lg:mr-5"
           >
@@ -40,8 +40,7 @@
             <img
               [class.rotate-180]="showDetails"
               src="../../../assets/Icons/task-list-detail-btn.svg"
-              alt="more datails"
-              (click)="toggleDiv()"
+              alt="Show More datails"
             />
           </button>
         </div>

@@ -1,19 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { ListType } from '../../list-type';
 import { DataService } from '../../data.service';
+import { NgForOfContext } from '@angular/common';
 
 @Component({
   selector: 'app-task-list',
   template: ` <div class="bg-white ">
     <ul
-      class="bg-white pt-8 pb-4 | lg:grid lg:grid-cols-3 lg:pt-20 lg:mx-auto lg:max-w-5xl lg:gap-x-8  "
+      class="bg-white pt-8 pb-4 | lg:grid lg:grid-cols-3 lg:pt-20 lg:mx-auto lg:max-w-5xl lg:gap-x-8 lg:gap-y-5"
     >
       <app-task-item
         *ngFor="let listItem of list; let i = index"
-        [class]="hoverIteraction(i + 1)"
         [item]="listItem"
         [index]="i"
         (taskAction)="taskStateChange($event)"
+        (expandTask)="getSelectedTask($event)"
+        [ngClass]="selectedTaskID === i ? 'text-white' : ''"
       ></app-task-item>
     </ul>
   </div>`,
@@ -21,24 +23,10 @@ import { DataService } from '../../data.service';
 export class TaskListComponent {
   list: ListType[] = [];
   dataService: DataService = inject(DataService);
+  selectedTaskID: number | undefined;
   constructor() {
     this.list = this.dataService.getAllData();
   }
-
-  hoverIteraction = (index: number) => {
-    let baseClass: string =
-      'mb-6 py-4 px-6 mx-auto bg-soft-gray rounded-md w-[90%] text-dark-blue |  lg:mx-0 lg:py-0 lg:w-full lg:items-center';
-    let lastItemRowClass: string = 'lg:hover:col-start-2 lg:hover:col-span-2';
-
-    let fixRowClass: number = Math.trunc((index + 3) / 3);
-    console.log(fixRowClass.toString());
-
-    if ((index + 1) % 3 === 0) {
-      return `${baseClass} ${lastItemRowClass}`;
-    } else {
-      return `${baseClass} lg:hover:col-span-2`;
-    }
-  };
 
   taskStateChange = (task: any) => {
     if (task.action === 'completed') {
@@ -49,6 +37,8 @@ export class TaskListComponent {
     }
     this.list = this.dataService.getAllData();
   };
+  getSelectedTask = (index: any) => {
+    this.selectedTaskID = index;
+    console.log(`Parent ${index}`);
+  };
 }
-// [class.lg:hover:col-start-2]="(i + 1) % 3 === 0" // here we use the remainder to assign the class only if i is dividable by 3 since every row will end with a third box in it
-// value + 3  = result / 3 = row

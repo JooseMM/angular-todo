@@ -10,11 +10,16 @@ export class TaskItemComponent {
   @Input() index!: number;
   @Input() showDetails: boolean = false;
   @Output() taskAction = new EventEmitter<{ id: number; action: string }>();
-  @Output() muoseOn = new EventEmitter<boolean>();
+  @Output() selectedTask = new EventEmitter<any>();
 
   toggleDiv = () => {
     this.showDetails = !this.showDetails;
-    this.muoseOn.emit(this.showDetails);
+  };
+
+  expandTask = (index: number) => {
+    this.toggleDiv();
+    this.selectedTask.emit(index);
+    console.log(`Child ${index}`);
   };
 
   targetTask = (id: number, action: string) => {

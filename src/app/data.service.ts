@@ -22,8 +22,8 @@ export class DataService {
       complete: false,
     },
     {
-      id: new Date().getTime(),
-      task: 'Get a goth thick babe, nigga damn!',
+      id: new Date().getTime() + 5,
+      task: 'Clean the house and take out the trash',
       complete: false,
     },
     {
