@@ -3,7 +3,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-navbar',
   template: `
-    <nav class="my-10 mx-8 flex justify-between  | lg:mx-desktop-margin ">
+    <nav
+      class="my-10 w-[90%] mx-auto flex justify-between |  | md:w-auto md:mx-desktop-margin "
+    >
       <a
         *ngIf="menuOpen == false"
         class="font-bold text-very-dark-blue"

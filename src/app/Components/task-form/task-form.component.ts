@@ -14,11 +14,11 @@ import { DataService } from '../../data.service';
     <form
       (submit)="submit()"
       #basicForm="ngForm"
-      class="py-6  w-[90%] max-w-5xl rounded-lg background drop-shadow-2xl relative | lg:px-10 lg:py-7 lg:mt-2 shadow-xl"
+      class="py-6  w-[90%] max-w-5xl rounded-lg background drop-shadow-2xl relative | sm:px-6 sm:py-7 | lg:px-10 lg:mt-2 shadow-xl"
     >
       <label for="new-task"
         ><h1
-          class="text-2xl font-medium text-white italic pl-4 | lg:mt-5 lg:text-[1.8rem]"
+          class="text-2xl font-medium text-white italic pl-4 | sm:mt-5 md:text-3xl"
         >
           New task
         </h1></label
@@ -32,11 +32,11 @@ import { DataService } from '../../data.service';
           type="text"
           id="Task"
           placeholder="Ex: Wash dishes"
-          class="py-2 px-4 rounded-md w-full | lg:w-[85%] lg:py-2.5 lg:rounded lg:text-lg"
+          class="py-2 px-4 rounded-md w-full | sm:w-[85%] sm:py-2.5 sm:rounded sm:text-lg"
         />
         <button
           type="submit"
-          class="bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-medium italic text-shadow | lg:px-14 lg:py-3 lg:rounded"
+          class="bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-medium italic text-shadow | sm:px-14 sm:py-3 sm:rounded"
         >
           ADD
         </button>

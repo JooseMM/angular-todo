@@ -90,7 +90,7 @@ export class DataService {
           id: value.id,
           task: value.task,
           complete: true,
-          showDetails: value.showDetails,
+          showDetails: false,
         };
       } else {
         return {

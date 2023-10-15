@@ -1,6 +1,6 @@
-<li  class="flex basis-full px-6 py-4  text-very-dark-blue | lg:py-8 lg:hover:cursor-pointer lg:mx-auto lg:w-full lg:h-full lg:items-center" [class.py-5]="item.complete" [class.item-start]="item.showDetails" (click)="expandTaskEvent(item.id)" 
+<li  class="flex basis-full px-6 py-6  text-very-dark-blue | lg:py-8 lg:px-8 lg:hover:cursor-pointer lg:mx-auto lg:w-full" [class.py-5]="item.complete" [ngClass]="item.showDetails ? 'item-start' : 'items-center' " [class.md:h-28]="!item.showDetails" (click)="expandTaskEvent(item.id)" 
       >
-        <span class=" font-black text-4xl mr-6 | lg:mr-5"
+        <span class=" font-black text-4xl mr-6 | lg:mr-8"
           >
           <h4 *ngIf="!item.complete; else elseElement">#{{  index + 1 }}</h4>
           <ng-template #elseElement>
@@ -9,16 +9,16 @@
           </span
         >
         <div
-          class="flex basis-full text-dark-blue gap-y-6 justify-between items-center | lg:flex-nowrap"
+          class="flex basis-full text-dark-blue gap-y-6 justify-between items-center"
           [class.flex-wrap]="item.showDetails"
         >
-          <span [class.opacity-50]="item.complete"  [class]="item.showDetails ? 'mt-2 lg:mt-0 lg:w-3/4' : 'truncate  | w-44 lg:w-[7vw] ' " >{{
+          <span [class]="item.showDetails ? 'mt-2 lg:w-3/4' : 'truncate max-w-[40vw] | md:max-w-[20vw] md:w-auto'" [class.opacity-50]="item.complete" [class.lg:w-full]="item.complete">{{
             item.task
           }}</span>
           <!-- hidden details div -->
           <div
             [class]="
-              item.showDetails? 'flex basis-9/12 justify-end items-end mb-2 lg:basis-auto lg:items-center lg:mb-0'  : 'hidden'
+              item.showDetails? 'flex basis-9/12 justify-end items-end mb-2 lg:items-center lg:mb-0'  : 'hidden'
             "
           >
           <!-- buttons for handling task state -->
@@ -40,7 +40,7 @@
           <button *ngIf="!item.complete" >
             <img
           
-              [ngClass]="item.showDetails ? 'rotate-180 lg:rotate-90' : 'rotate-0 lg:-rotate-90'"
+              [ngClass]="item.showDetails ? 'rotate-180' : 'rotate-0'"
               src="../../../assets/Icons/task-list-detail-btn.svg"
               alt="Show More datails"
             />
