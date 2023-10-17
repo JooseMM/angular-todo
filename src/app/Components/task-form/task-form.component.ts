@@ -54,7 +54,6 @@ export class TaskFormComponent {
 
   submit() {
     this.dataService.addData(this.newTask);
-    this.list = this.dataService.getAllData();
     this.newTask = '';
   }
 }

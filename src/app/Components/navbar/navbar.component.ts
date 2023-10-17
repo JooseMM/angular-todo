@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-navbar',
   template: `
     <nav
-      class="my-10 w-[90%] mx-auto flex justify-between |  | md:w-auto md:mx-desktop-margin "
+      class="my-10 w-[90%] mx-auto flex justify-between | md:w-auto md:mx-desktop-margin "
     >
       <a
         *ngIf="menuOpen == false"

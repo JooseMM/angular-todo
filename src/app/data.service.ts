@@ -5,44 +5,7 @@ import { ListType } from './list-type';
   providedIn: 'root',
 })
 export class DataService {
-  protected dataBase: ListType[] = [
-    {
-      id: new Date().getTime() + 10,
-      task: 'Clean the house and take out the trash ',
-      complete: false,
-      showDetails: false,
-    },
-    {
-      id: new Date().getTime() + 20,
-      task: 'Get a goth thick babe, nigga damn!',
-      complete: false,
-      showDetails: false,
-    },
-    {
-      id: new Date().getTime() + 50,
-      task: 'Get a goth thick',
-      complete: false,
-      showDetails: false,
-    },
-    {
-      id: new Date().getTime() + 100,
-      task: 'Clean the house and take out the trash',
-      complete: false,
-      showDetails: false,
-    },
-    {
-      id: new Date().getTime() + 75,
-      task: 'Get a goth thick babe, nigga damn!',
-      complete: false,
-      showDetails: false,
-    },
-    {
-      id: new Date().getTime() + 60,
-      task: 'Get a goth thick babe, nigga damn!',
-      complete: false,
-      showDetails: false,
-    },
-  ];
+  protected dataBase: ListType[] = [];
   constructor() {}
 
   submit(newTask: string) {
@@ -50,6 +13,7 @@ export class DataService {
   }
 
   getAllData(): ListType[] {
+    this.sortByLatest();
     return this.dataBase;
   }
   addData = (newTask: string) => {
@@ -60,10 +24,31 @@ export class DataService {
       showDetails: false,
     });
   };
+
+  sortByLatest = () => {
+    let completeTaskArray = this.dataBase
+      .filter((obj) => obj.complete)
+      .sort((a, b) => {
+        if (a.id > b.id) return -1;
+        if (a.id < b.id) return 1;
+        return 0;
+      });
+    let pendingTaskArray = this.dataBase
+      .filter((obj) => !obj.complete)
+      .sort((a, b) => {
+        if (a.id > b.id) return -1;
+        if (a.id < b.id) return 1;
+        return 0;
+      });
+
+    this.dataBase = [...pendingTaskArray, ...completeTaskArray];
+  };
+
   deleteData = (id: Number) => {
     this.dataBase = this.dataBase.filter((value: ListType) => value.id != id);
   };
   setShowDetails = (id: Number) => {
+    //make this cleaner
     let newArray: ListType[] = this.dataBase.map((value) => {
       if (value.id === id) {
         return {
@@ -84,6 +69,7 @@ export class DataService {
     this.dataBase = [...newArray];
   };
   completedTask = (id: number) => {
+    //make this cleaner
     let newArray: ListType[] = this.dataBase.map((value) => {
       if (value.id === id) {
         return {
