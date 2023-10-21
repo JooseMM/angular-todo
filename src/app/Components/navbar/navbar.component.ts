@@ -35,7 +35,7 @@ import { Component } from '@angular/core';
         </li>
         <li>
           <a
-            routerLink="/advices"
+            routerLink="/about"
             routerLinkActive="font-bold"
             (click)="mobileMenuToggle()"
             >About</a
@@ -72,7 +72,7 @@ import { Component } from '@angular/core';
         <li>
           <a
             class="hover:text-very-dark-blue/100"
-            routerLink="/advices"
+            routerLink="/about"
             routerLinkActive="font-bold text-very-dark-blue/100"
             >About</a
           >

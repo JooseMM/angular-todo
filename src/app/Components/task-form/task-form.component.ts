@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { ListType } from '../../list-type';
 import { DataService } from '../../data.service';
 
 @Component({
@@ -46,9 +45,7 @@ import { DataService } from '../../data.service';
 })
 export class TaskFormComponent {
   public newTask: string;
-  list: ListType[] = [];
-  dataService: DataService = inject(DataService);
-  constructor() {
+  constructor(private dataService: DataService) {
     this.newTask = '';
   }
 

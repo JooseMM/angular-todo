@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DataService } from 'src/app/data.service';
 import { ListType } from 'src/app/list-type';
 
 @Component({
@@ -8,15 +9,16 @@ import { ListType } from 'src/app/list-type';
 export class TaskItemComponent {
   @Input() item!: ListType;
   @Input() index!: number;
-  @Output() taskAction = new EventEmitter<{ id: number; action: string }>();
-  @Output() selectedTask = new EventEmitter<number>();
 
-  expandTaskEvent = (id: number) => {
-    this.selectedTask.emit(id);
+  constructor(private dataService: DataService) {}
+
+  deleteItem = (id: number) => {
+    this.dataService.deleteData(id);
   };
-
-  targetTask = (id: number, action: string) => {
-    let task = { id, action };
-    this.taskAction.emit(task);
+  complete = (id: number) => {
+    this.dataService.completedTask(id);
+  };
+  showMore = (id: number) => {
+    this.dataService.setShowDetails(id);
   };
 }

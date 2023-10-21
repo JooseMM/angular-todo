@@ -1,55 +1,76 @@
 import { Injectable } from '@angular/core';
 import { ListType } from './list-type';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  protected dataBase: ListType[] = [];
-  constructor() {}
+  // protected dataBase: ListType[] = [];
+  private dataBase = new BehaviorSubject<ListType[]>([]);
+  constructor(private router: Router) {}
 
-  submit(newTask: string) {
-    console.log(newTask);
-  }
+  getData = () => {
+    return this.dataBase.pipe(map((v) => v));
+  };
 
-  getAllData(): ListType[] {
-    this.sortByLatest();
-    return this.dataBase;
-  }
   addData = (newTask: string) => {
-    this.dataBase.push({
+    let updateDataBase: ListType[] = [];
+    this.getData().subscribe((data) => (updateDataBase = [...data]));
+
+    updateDataBase.push({
       id: new Date().getTime(),
       task: newTask,
       complete: false,
       showDetails: false,
     });
+    this.sortByLatest(updateDataBase);
   };
 
-  sortByLatest = () => {
-    let completeTaskArray = this.dataBase
-      .filter((obj) => obj.complete)
+  sortByLatest = (data: ListType[]) => {
+    let finishTask: ListType[] = [];
+    let pendingTask: ListType[] = [];
+
+    // getData.subscribe({
+    //   next: (value) => (finishTask = value.filter((c) => c.complete)),
+    // });
+    // getData.subscribe({
+    //   next: (value) => (pendingTask = value.filter((c) => !c.complete)),
+    // });
+
+    finishTask = data
+      .filter((match) => match.complete)
       .sort((a, b) => {
         if (a.id > b.id) return -1;
         if (a.id < b.id) return 1;
         return 0;
       });
-    let pendingTaskArray = this.dataBase
-      .filter((obj) => !obj.complete)
+    pendingTask = data
+      .filter((match) => !match.complete)
       .sort((a, b) => {
         if (a.id > b.id) return -1;
         if (a.id < b.id) return 1;
         return 0;
       });
 
-    this.dataBase = [...pendingTaskArray, ...completeTaskArray];
+    console.log([...pendingTask, ...finishTask]);
+    this.dataBase.next([...pendingTask, ...finishTask]);
   };
 
   deleteData = (id: Number) => {
-    this.dataBase = this.dataBase.filter((value: ListType) => value.id != id);
+    let updateDataBase: ListType[] = [];
+    this.getData().subscribe((value) => (updateDataBase = [...value]));
+
+    this.dataBase.next(
+      updateDataBase.filter((value: ListType) => value.id != id)
+    );
   };
   setShowDetails = (id: Number) => {
-    //make this cleaner
-    let newArray: ListType[] = this.dataBase.map((value) => {
+    let updateData: ListType[] = [];
+    this.getData().subscribe((value) => (updateData = [...value]));
+
+    updateData = updateData.map((value) => {
       if (value.id === id) {
         return {
           id: value.id,
@@ -58,19 +79,15 @@ export class DataService {
           showDetails: !value.showDetails,
         };
       } else {
-        return {
-          id: value.id,
-          task: value.task,
-          complete: value.complete,
-          showDetails: false,
-        };
+        return value;
       }
     });
-    this.dataBase = [...newArray];
+
+    this.dataBase.next(updateData);
   };
   completedTask = (id: number) => {
-    //make this cleaner
-    let newArray: ListType[] = this.dataBase.map((value) => {
+    let updateData = this.dataBase.getValue();
+    updateData = updateData.map((value) => {
       if (value.id === id) {
         return {
           id: value.id,
@@ -79,14 +96,9 @@ export class DataService {
           showDetails: false,
         };
       } else {
-        return {
-          id: value.id,
-          task: value.task,
-          complete: value.complete,
-          showDetails: value.showDetails,
-        };
+        return value;
       }
     });
-    this.dataBase = [...newArray];
+    this.sortByLatest(updateData);
   };
 }
