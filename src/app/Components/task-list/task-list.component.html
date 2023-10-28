@@ -1,0 +1,76 @@
+<div class="bg-white ">
+    <ul
+      class="bg-white py-8  pb-4 grid grid-cols-1 w-[90%] gap-y-4 mx-auto |  md:grid-cols-2 md:gap-x-5 md:py-16 | lg:max-w-5xl lg:gap-x-8 lg:gap-y-5"
+    >
+      <li
+        class="flex basis-full px-6 py-6 bg-soft-gray rounded-md text-very-dark-blue |  lg:mx-0 lg:w-full lg:py-8 lg:px-8 lg:hover:cursor-pointer "
+        [class.py-5]="listItem.complete"
+        [class.md:h-28]="!listItem.showDetails"
+        (click)="!listItem.complete ? showMore(listItem.id) : null"
+        [class.md:h-28]="!listItem.showDetails"
+        *ngFor="let listItem of list; let i = index"
+        [ngClass]="listItem.showDetails ? 'item-start' : 'items-center'"
+      >
+        <span class=" font-black text-4xl mr-6 | lg:mr-8">
+          <h4 *ngIf="!listItem.complete; else elseElement">#{{ i + 1 }}</h4>
+          <ng-template #elseElement>
+            <img
+              src="../../../assets/Icons/completed-icon-task.svg"
+              alt="Task completed"
+              class="lg:w-12"
+            />
+          </ng-template>
+        </span>
+        <div
+          class="flex basis-full text-dark-blue gap-y-6 justify-between items-center"
+          [class.flex-wrap]="listItem.showDetails"
+        >
+          <span
+            [ngClass]="
+              listItem.showDetails
+                ? 'mt-2 w-full'
+                : 'truncate max-w-[40vw] w-auto | md:max-w-[20vw] md:w-auto'
+            "
+            [class.opacity-50]="listItem.complete"
+            [class.lg:w-full]="listItem.complete"
+            >{{ listItem.task }}</span
+          >
+          <!-- hidden details div -->
+          <div
+            [class]="
+              listItem.showDetails
+                ? 'flex basis-9/12 justify-end items-end mb-2 lg:items-center lg:mb-0'
+                : 'hidden'
+            "
+          >
+            <!-- buttons for handling task state -->
+            <div
+              class="flex justify-center items-center bg-very-dark-blue px-4 py-2 rounded-md space-x-6"
+            > 
+              
+             <button (click)="deleteItem(listItem.id)">
+                <img
+                  src="../../../assets/Icons/delete-icon-task.svg"
+                  alt="delete this task"
+                />
+              </button>
+              <button (click)="complete(listItem.id)">
+                <img
+                  src="../../../assets/Icons/done-icon-task.svg"
+                  alt="mark as complete"
+                />
+              </button>
+            </div>
+          </div> 
+          <!-- Button for showing more details about task -->
+           <button *ngIf="!listItem.complete">
+            <img
+              [ngClass]="listItem.showDetails ? 'rotate-180' : 'rotate-0'"
+              src="../../../assets/Icons/task-list-detail-btn.svg"
+              alt="Show More datails"
+            />
+          </button>
+        </div> 
+      </li>
+    </ul>
+  </div>

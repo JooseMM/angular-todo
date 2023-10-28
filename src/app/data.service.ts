@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class DataService {
-  // protected dataBase: ListType[] = [];
   private dataBase = new BehaviorSubject<ListType[]>([]);
   constructor(private router: Router) {}
 
@@ -31,13 +30,6 @@ export class DataService {
   sortByLatest = (data: ListType[]) => {
     let finishTask: ListType[] = [];
     let pendingTask: ListType[] = [];
-
-    // getData.subscribe({
-    //   next: (value) => (finishTask = value.filter((c) => c.complete)),
-    // });
-    // getData.subscribe({
-    //   next: (value) => (pendingTask = value.filter((c) => !c.complete)),
-    // });
 
     finishTask = data
       .filter((match) => match.complete)
@@ -79,7 +71,12 @@ export class DataService {
           showDetails: !value.showDetails,
         };
       } else {
-        return value;
+        return {
+          id: value.id,
+          task: value.task,
+          complete: value.complete,
+          showDetails: false,
+        };
       }
     });
 
