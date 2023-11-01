@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -86,8 +87,11 @@ export class NavbarComponent {
   menuIconSrc: string = '../../assets/Icons/menu-icon.svg';
   menuIconClass: string = 'w-8 h-6 md:hidden';
 
+  constructor(public router: Router) {}
+
   mobileMenuToggle = () => {
     this.menuOpen = !this.menuOpen;
+
     if (this.menuOpen) {
       this.menuIconSrc = '../../assets/Icons/menu-icon-close.svg';
       this.menuIconClass = 'w-8 h-6 md:hidden';
@@ -97,3 +101,14 @@ export class NavbarComponent {
     }
   };
 }
+
+// [ngClass]="
+// this.router.routerState.snapshot.url === '/about'
+//   ? 'bg-black'
+//   : 'bg-red'
+// "
+// this.router.events.subscribe((event) => {
+//   if (event instanceof NavigationEnd && this.router.url === '/about') {
+//     console.log('Uh');
+//   }
+// });
