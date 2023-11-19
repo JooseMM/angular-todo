@@ -23,7 +23,7 @@ import { Router, NavigationEnd } from '@angular/router';
             routerLink="/home"
             routerLinkActive="font-bold"
             (click)="mobileMenuToggle()"
-            >Home</a
+            >Inicio</a
           >
         </li>
         <li>
@@ -39,7 +39,7 @@ import { Router, NavigationEnd } from '@angular/router';
             routerLink="/about"
             routerLinkActive="font-bold"
             (click)="mobileMenuToggle()"
-            >About</a
+            >Nosotros</a
           >
         </li>
       </ul>
@@ -59,7 +59,7 @@ import { Router, NavigationEnd } from '@angular/router';
             class="hover:text-very-dark-blue/100"
             routerLink="/home"
             routerLinkActive="font-bold text-very-dark-blue/100"
-            >Home</a
+            >Inicio</a
           >
         </li>
         <li>
@@ -75,7 +75,7 @@ import { Router, NavigationEnd } from '@angular/router';
             class="hover:text-very-dark-blue/100"
             routerLink="/about"
             routerLinkActive="font-bold text-very-dark-blue/100"
-            >About</a
+            >Nosotros</a
           >
         </li>
       </ul>

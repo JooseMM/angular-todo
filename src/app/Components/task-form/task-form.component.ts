@@ -19,7 +19,7 @@ import { DataService } from '../../data.service';
         ><h1
           class="text-2xl font-medium text-white italic pl-4 | sm:mt-5 md:text-3xl"
         >
-          New task
+          Nueva Tarea
         </h1></label
       >
 
@@ -30,14 +30,14 @@ import { DataService } from '../../data.service';
           required
           type="text"
           id="Task"
-          placeholder="Ex: Wash dishes"
+          placeholder="Ejem. Lavar los platos"
           class="py-2 px-4 rounded-md w-full | sm:w-[85%] sm:py-2.5 sm:rounded sm:text-lg"
         />
         <button
           type="submit"
           class="bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-medium italic text-shadow | sm:px-14 sm:py-3 sm:rounded"
         >
-          ADD
+          AGREGAR
         </button>
       </div>
     </form>
