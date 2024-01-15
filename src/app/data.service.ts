@@ -22,16 +22,6 @@ export class DataService {
       showDetails: false,
     })
     this.sortByLatest(nextValue);
-//    let updateDataBase: ListType[] = [];
-//    this.getData().subscribe((data) => (updateDataBase = [...data]));
-//
-//    updateDataBase.push({
-//      id: new Date().getTime(),
-//      task: newTask,
-//      complete: false,
-//      showDetails: false,
-//    });
-//    this.sortByLatest(updateDataBase);
   };
 
   sortByLatest = (data: ListType[]) => {
