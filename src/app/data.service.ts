@@ -6,8 +6,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private dataBase = new BehaviorSubject<ListType[]>([]);
-  constructor() {}
+  private dataBase;
+  constructor() {
+    this.dataBase = new BehaviorSubject<ListType[]>([]);
+  }
 
   getData = () => {
     return this.dataBase.asObservable();
