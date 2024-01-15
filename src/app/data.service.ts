@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ListType } from './list-type';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { Router } from '@angular/router';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
   private dataBase = new BehaviorSubject<ListType[]>([]);
-  constructor(private router: Router) {}
+  constructor() {}
 
   getData = () => {
     return this.dataBase.pipe(map((v) => v));
