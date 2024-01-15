@@ -1,4 +1,4 @@
 # TodoList
 
-- Implement fetching data from api
-- implement clean ups for every subscription 
+- fix sortFunction in services
+- keep implementing the api fetching to interact with your data

@@ -10,6 +10,7 @@ import { ApplicationComponent } from './Components/pages/application/application
 import { FormsModule } from '@angular/forms';
 import { AboutComponent } from './Components/pages/about/about.component';
 import { TaskListComponent } from './Components/task-list/task-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,10 +21,9 @@ import { TaskListComponent } from './Components/task-list/task-list.component';
     TaskFormComponent,
     ApplicationComponent,
     AboutComponent,
-
     TaskListComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [HttpClientModule, BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -1,14 +1,27 @@
 import { Injectable } from '@angular/core';
-import { ListType } from './list-type';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { ListType, rawjson } from './list-type';
+import { environment } from 'src/environments/environment';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private dataBase;
-  constructor() {
-    this.dataBase = new BehaviorSubject<ListType[]>([]);
+  private dataBase = new BehaviorSubject<ListType[]>([]);
+  //private subscription
+  constructor(private http :HttpClient) {
+    this.http.get<rawjson[]>(environment.API_URL)
+    .pipe(
+      map((value: rawjson[]) => value.map((prop: rawjson)=>
+       ({
+        _id: prop._id,
+         task: prop.task,
+         complete: prop.complete,
+         date: prop.date,
+         showDetails: false
+       })))
+   ).subscribe((value:ListType[]) => this.dataBase.next(value));
   }
 
   getData = () => {
@@ -18,8 +31,9 @@ export class DataService {
   addData = (newTask: string) => {
     const nextValue = this.dataBase.value;
     nextValue.push({
-      id: new Date(),
+      _id: '',
       task: newTask,
+      date: new Date(),
       complete: false,
       showDetails: false,
     })
@@ -49,18 +63,19 @@ export class DataService {
     this.dataBase.next([...pendingTask, ...finishTask]);
   };
 
-  deleteData = (id: Date) => {
+  deleteData = (id: string) => {
     const nextValue = this.dataBase.value;
-    this.dataBase.next(nextValue.filter((value: ListType) => value.id != id));
+    this.dataBase.next(nextValue.filter((value: ListType) => value._id != id));
 
   };
-  setShowDetails = (id: Date) => {
+  setShowDetails = (id: string) => {
     const nextValue = this.dataBase.value;
     this.dataBase.next(nextValue.map((value): ListType => {
-      if(value.id === id) {
+      if(value._id === id) {
         return {
-          id: value.id,
+          _id: value._id,
           task: value.task,
+          date: value.date,
           complete: value.complete,
           showDetails: !value.showDetails
         };
@@ -68,13 +83,14 @@ export class DataService {
       else return value;
     }));
   };
-  completedTask = (id: Date) => {
+  completedTask = (id: string) => {
     const updateState = this.dataBase.value;
     this.sortByLatest(updateState.map((value): ListType => {
-      if(value.id === id) {
+      if(value._id === id) {
           return {
-          id: value.id,
+          _id: value._id,
           task: value.task,
+          date: value.date,
           complete: true,
           showDetails: !value.showDetails
           };
