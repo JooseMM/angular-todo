@@ -10,17 +10,17 @@ import { DataService } from '../../data.service';
 export class TaskListComponent {
   list: ListType[] = [];
 
-  deleteItem = (id: number) => {
+  deleteItem = (id: Date) => {
     this.dataService.deleteData(id);
   };
-  complete = (id: number) => {
+  complete = (id: Date) => {
     this.dataService.completedTask(id);
   };
-  showMore = (id: number) => {
+  showMore = (id: Date) => {
     this.dataService.setShowDetails(id);
   };
   constructor(private dataService: DataService) {
-    this.dataService.getData().subscribe((value) => {
+    this.dataService.getData().subscribe((value: ListType[]) => {
       this.list = value;
     });
   }

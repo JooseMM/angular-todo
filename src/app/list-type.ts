@@ -1,5 +1,5 @@
 export interface ListType {
-  id: number;
+  id: Date;
   task: string;
   complete: boolean;
   showDetails: boolean;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ListType } from './list-type';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,20 +10,28 @@ export class DataService {
   constructor() {}
 
   getData = () => {
-    return this.dataBase.pipe(map((v) => v));
+    return this.dataBase.asObservable();
   };
 
   addData = (newTask: string) => {
-    let updateDataBase: ListType[] = [];
-    this.getData().subscribe((data) => (updateDataBase = [...data]));
-
-    updateDataBase.push({
-      id: new Date().getTime(),
+    const nextValue = this.dataBase.value;
+    nextValue.push({
+      id: new Date(),
       task: newTask,
       complete: false,
       showDetails: false,
-    });
-    this.sortByLatest(updateDataBase);
+    })
+    this.sortByLatest(nextValue);
+//    let updateDataBase: ListType[] = [];
+//    this.getData().subscribe((data) => (updateDataBase = [...data]));
+//
+//    updateDataBase.push({
+//      id: new Date().getTime(),
+//      task: newTask,
+//      complete: false,
+//      showDetails: false,
+//    });
+//    this.sortByLatest(updateDataBase);
   };
 
   sortByLatest = (data: ListType[]) => {
@@ -49,52 +57,37 @@ export class DataService {
     this.dataBase.next([...pendingTask, ...finishTask]);
   };
 
-  deleteData = (id: Number) => {
-    let updateDataBase: ListType[] = [];
-    this.getData().subscribe((value) => (updateDataBase = [...value]));
+  deleteData = (id: Date) => {
+    const nextValue = this.dataBase.value;
+    this.dataBase.next(nextValue.filter((value: ListType) => value.id != id));
 
-    this.dataBase.next(
-      updateDataBase.filter((value: ListType) => value.id != id)
-    );
   };
-  setShowDetails = (id: Number) => {
-    let updateData: ListType[] = [];
-    this.getData().subscribe((value) => (updateData = [...value]));
-
-    updateData = updateData.map((value) => {
-      if (value.id === id) {
+  setShowDetails = (id: Date) => {
+    const nextValue = this.dataBase.value;
+    this.dataBase.next(nextValue.map((value): ListType => {
+      if(value.id === id) {
         return {
           id: value.id,
           task: value.task,
           complete: value.complete,
-          showDetails: !value.showDetails,
-        };
-      } else {
-        return {
-          id: value.id,
-          task: value.task,
-          complete: value.complete,
-          showDetails: false,
+          showDetails: !value.showDetails
         };
       }
-    });
-
-    this.dataBase.next(updateData);
+      else return value;
+    }));
   };
-  completedTask = (id: number) => {
-    let updateData = this.dataBase.getValue();
-    updateData = updateData.map((value) => {
-      if (value.id === id) {
-        return {
+  completedTask = (id: Date) => {
+    const updateState = this.dataBase.value;
+    this.sortByLatest(updateState.map((value): ListType => {
+      if(value.id === id) {
+          return {
           id: value.id,
           task: value.task,
           complete: true,
-          showDetails: false,
-        };
-      } else {
-        return value;
+          showDetails: !value.showDetails
+          };
       }
-    });
-    this.sortByLatest(updateData);
+      else { return value; }
+    }))
   };
 }
