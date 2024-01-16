@@ -6,7 +6,7 @@
         class="flex basis-full px-6 py-6 bg-soft-gray rounded-md text-very-dark-blue |  lg:mx-0 lg:w-full lg:py-8 lg:px-8 lg:hover:cursor-pointer "
         [class.py-5]="listItem.complete"
         [class.md:h-28]="!listItem.showDetails"
-        (click)="!listItem.complete ? showMore(listItem.id) : null"
+        (click)="!listItem.complete ? showMore(listItem._id) : null"
         [class.md:h-28]="!listItem.showDetails"
         *ngFor="let listItem of list; let i = index"
         [ngClass]="listItem.showDetails ? 'item-start' : 'items-center'"
@@ -46,22 +46,22 @@
             <!-- buttons for handling task state -->
             <div
               class="flex justify-center items-center bg-very-dark-blue px-4 py-2 rounded-md space-x-6"
-            > 
-              
-             <button (click)="deleteItem(listItem.id)">
+            >
+
+             <button (click)="deleteItem(listItem._id)">
                 <img
                   src="../../../assets/Icons/delete-icon-task.svg"
                   alt="delete this task"
                 />
               </button>
-              <button (click)="complete(listItem.id)">
+              <button (click)="complete(listItem._id)">
                 <img
                   src="../../../assets/Icons/done-icon-task.svg"
                   alt="mark as complete"
                 />
               </button>
             </div>
-          </div> 
+          </div>
           <!-- Button for showing more details about task -->
            <button *ngIf="!listItem.complete">
             <img
@@ -70,7 +70,7 @@
               alt="Show More datails"
             />
           </button>
-        </div> 
+        </div>
       </li>
     </ul>
   </div>

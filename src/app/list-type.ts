@@ -1,7 +1,8 @@
-
-export interface rawjson {
-  _id: string;
+export interface task {
   task: string;
+}
+export interface rawjson extends task{
+  _id: string;
   complete: boolean;
   date: Date;
 }

@@ -12,13 +12,13 @@ export class TaskListComponent implements OnDestroy{
   list: ListType[] = [];
   subscription: Subscription;
 
-  deleteItem = (id: Date) => {
+  deleteItem = (id: string) => {
     this.dataService.deleteData(id);
   };
-  complete = (id: Date) => {
+  complete = (id: string) => {
     this.dataService.completedTask(id);
   };
-  showMore = (id: Date) => {
+  showMore = (id: string) => {
     this.dataService.setShowDetails(id);
   };
   constructor(private dataService: DataService) {
