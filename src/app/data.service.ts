@@ -11,7 +11,6 @@ export class DataService {
   private dataBase = new BehaviorSubject<ListType[]>([]);
   subscription : Subscription;
   constructor(private http :HttpClient) {
-    this.fetchData();
     this.subscription = this.fetchData().subscribe((value:ListType[]) => this.dataBase.next(value));
     this.subscription.unsubscribe();
   }
@@ -28,8 +27,8 @@ export class DataService {
        }))))
   }
   getData = () => {
-  //  return this.dataBase.asObservable();
    this.subscription = this.fetchData().subscribe((value:ListType[]) => this.dataBase.next(value));
+   return this.dataBase.asObservable();
   };
 
   addData = (newTask: string) => {
@@ -44,7 +43,7 @@ export class DataService {
     this.sortByLatest(nextValue);
   };
 
-  sortByLatest = (data: ListType[]) => {
+  sortByLatest = (data: ListType[]):void => {
     let finishTask: ListType[] = [];
     let pendingTask: ListType[] = [];
 
@@ -67,12 +66,22 @@ export class DataService {
     this.dataBase.next([...pendingTask, ...finishTask]);
   };
 
-  deleteData = (id: string) => {
+  deleteData = (deleteId: string):void => {
     const nextValue = this.dataBase.value;
-    this.dataBase.next(nextValue.filter((value: ListType) => value._id != id));
+    this.dataBase.next(nextValue.filter((value: ListType) => value._id != deleteId));
 
+      this.http.delete<rawjson[]>(`${environment.API_URL}delete/${deleteId}`)
+      .pipe(
+      map((value: rawjson[]) => value.map((prop: rawjson)=> ({
+        _id: prop._id,
+         task: prop.task,
+         complete: prop.complete,
+         date: prop.date,
+         showDetails: false
+       }))))
+      .subscribe((value:ListType[]) => this.dataBase.next(value));
   };
-  setShowDetails = (id: string) => {
+  setShowDetails = (id: string):void => {
     const nextValue = this.dataBase.value;
     this.dataBase.next(nextValue.map((value): ListType => {
       if(value._id === id) {
@@ -87,7 +96,7 @@ export class DataService {
       else return value;
     }));
   };
-  completedTask = (id: string) => {
+  completedTask = (id: string):void => {
     const updateState = this.dataBase.value;
     this.sortByLatest(updateState.map((value): ListType => {
       if(value._id === id) {
@@ -102,4 +111,8 @@ export class DataService {
       else { return value; }
     }))
   };
+  cleanUp = ():void => {
+    this.subscription.unsubscribe();
+  }
+
 }
