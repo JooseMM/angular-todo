@@ -9,3 +9,7 @@ export interface rawjson extends task{
 export interface ListType extends rawjson{
   showDetails: boolean;
 }
+export interface CreateResponse {
+  acknowledged: boolean,
+  insertedId: string
+}

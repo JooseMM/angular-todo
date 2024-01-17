@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ListType, rawjson, task } from './list-type';
+import { ListType, rawjson, CreateResponse, task } from './list-type';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 
@@ -30,12 +30,29 @@ export class DataService {
    return this.dataBase.asObservable();
   };
 
+  setId = (tempID: string, ID: string):void => {
+    const nextValue = this.dataBase.value;
+    this.dataBase.next(nextValue.map((value): ListType => {
+      if(value._id === tempID) {
+        console.log(value._id, ID)
+        return {
+          _id: ID,
+          task: value.task,
+          date: value.date,
+          complete: value.complete,
+          showDetails: !value.showDetails
+        };
+      }
+      else return value;
+    }));
+  };
   addData = (newTask: string) => {
     //make it so that when receiving the post request response
     //update only the id with the one provided in the response
+    const tempId = Date.now().toString();
     const nextValue = this.dataBase.value;
     nextValue.push({
-      _id: '',
+      _id: tempId,
       task: newTask,
       date: new Date(),
       complete: false,
@@ -43,8 +60,8 @@ export class DataService {
     })
     this.sortByLatest(nextValue);
 
-    this.http.post<task>(environment.API_URL, { task: newTask, date: new Date()})
-        .subscribe((response)=> console.log(response));
+    this.http.post<CreateResponse>(environment.API_URL, { task: newTask, date: new Date()})
+        .subscribe((response)=> this.setId(tempId, response.insertedId));
   };
 
   sortByLatest = (data: ListType[]):void => {
@@ -66,24 +83,24 @@ export class DataService {
         return 0;
       });
 
-    console.log([...pendingTask, ...finishTask]);
     this.dataBase.next([...pendingTask, ...finishTask]);
   };
 
   deleteData = (deleteId: string):void => {
     const nextValue = this.dataBase.value;
-    this.dataBase.next(nextValue.filter((value: ListType) => value._id != deleteId));
+    this.dataBase.next(nextValue.filter((value: ListType) =>  value._id != deleteId ));
 
-     this.subscription = this.http.delete<rawjson[]>(`${environment.API_URL}delete/${deleteId}`)
+      this.subscription = this.http.delete<rawjson[]>(`${environment.API_URL}delete/${deleteId}`)
       .pipe(
-      map((value: rawjson[]) => value.map((prop: rawjson)=> ({
-        _id: prop._id,
-         task: prop.task,
-         complete: prop.complete,
-         date: prop.date,
-         showDetails: false
-       }))))
-       .subscribe((response)=> console.log(response));
+        map((value: rawjson[]) => value.map((prop: rawjson)=> ({
+          _id: prop._id,
+          task: prop.task,
+          complete: prop.complete,
+          date: prop.date,
+          showDetails: false
+        }))))
+        .subscribe((response)=> console.log(response));
+
   };
   setShowDetails = (id: string):void => {
     const nextValue = this.dataBase.value;
@@ -104,13 +121,13 @@ export class DataService {
     const updateState = this.dataBase.value;
     this.sortByLatest(updateState.map((value): ListType => {
       if(value._id === id) {
-          return {
+        return {
           _id: value._id,
           task: value.task,
           date: value.date,
           complete: true,
           showDetails: !value.showDetails
-          };
+        };
       }
       else { return value; }
     }));
