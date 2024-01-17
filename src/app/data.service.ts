@@ -40,7 +40,7 @@ export class DataService {
           task: value.task,
           date: value.date,
           complete: value.complete,
-          showDetails: !value.showDetails
+          showDetails: value.showDetails
         };
       }
       else return value;
