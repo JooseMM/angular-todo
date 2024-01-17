@@ -6,16 +6,6 @@ import { AboutComponent } from './Components/pages/about/about.component';
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent,
-    children: [
-      {
-        path: 'application',
-        component: ApplicationComponent,
-      },
-    ],
-  },
-  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
@@ -27,6 +17,16 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    children: [
+      {
+        path: 'application',
+        component: ApplicationComponent,
+      },
+    ],
   },
 ];
 
