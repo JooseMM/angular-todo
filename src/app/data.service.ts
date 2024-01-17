@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ListType, rawjson } from './list-type';
+import { ListType, rawjson, task } from './list-type';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 
@@ -11,7 +11,7 @@ export class DataService {
   private dataBase = new BehaviorSubject<ListType[]>([]);
   subscription : Subscription;
   constructor(private http :HttpClient) {
-    this.subscription = this.fetchData().subscribe((value:ListType[]) => this.dataBase.next(value));
+    this.subscription = this.fetchData().subscribe((value:ListType[]) => this.sortByLatest(value));
     this.subscription.unsubscribe();
   }
 
@@ -41,6 +41,10 @@ export class DataService {
       showDetails: false,
     })
     this.sortByLatest(nextValue);
+
+    this.http.post<task>(environment.API_URL, { task: newTask, date: new Date()})
+        .subscribe((response)=> console.log(response))
+        .unsubscribe();
   };
 
   sortByLatest = (data: ListType[]):void => {
@@ -79,7 +83,8 @@ export class DataService {
          date: prop.date,
          showDetails: false
        }))))
-      .subscribe((value:ListType[]) => this.dataBase.next(value));
+      .subscribe((value:ListType[]) => this.dataBase.next(value))
+      .unsubscribe();
   };
   setShowDetails = (id: string):void => {
     const nextValue = this.dataBase.value;
