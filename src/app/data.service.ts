@@ -12,7 +12,6 @@ export class DataService {
   subscription : Subscription;
   constructor(private http :HttpClient) {
     this.subscription = this.fetchData().subscribe((value:ListType[]) => this.sortByLatest(value));
-    this.subscription.unsubscribe();
   }
 
   fetchData = ():Observable<ListType[]> => {
@@ -43,8 +42,7 @@ export class DataService {
     this.sortByLatest(nextValue);
 
     this.http.post<task>(environment.API_URL, { task: newTask, date: new Date()})
-        .subscribe((response)=> console.log(response))
-        .unsubscribe();
+        .subscribe((response)=> console.log(response));
   };
 
   sortByLatest = (data: ListType[]):void => {
@@ -74,7 +72,7 @@ export class DataService {
     const nextValue = this.dataBase.value;
     this.dataBase.next(nextValue.filter((value: ListType) => value._id != deleteId));
 
-      this.http.delete<rawjson[]>(`${environment.API_URL}delete/${deleteId}`)
+     this.subscription = this.http.delete<rawjson[]>(`${environment.API_URL}delete/${deleteId}`)
       .pipe(
       map((value: rawjson[]) => value.map((prop: rawjson)=> ({
         _id: prop._id,
@@ -84,7 +82,6 @@ export class DataService {
          showDetails: false
        }))))
       .subscribe((value:ListType[]) => this.dataBase.next(value))
-      .unsubscribe();
   };
   setShowDetails = (id: string):void => {
     const nextValue = this.dataBase.value;
