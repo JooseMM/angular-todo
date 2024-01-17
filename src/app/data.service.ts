@@ -31,6 +31,8 @@ export class DataService {
   };
 
   addData = (newTask: string) => {
+    //make it so that when receiving the post request response
+    //update only the id with the one provided in the response
     const nextValue = this.dataBase.value;
     nextValue.push({
       _id: '',
@@ -81,7 +83,7 @@ export class DataService {
          date: prop.date,
          showDetails: false
        }))))
-      .subscribe((value:ListType[]) => this.dataBase.next(value))
+       .subscribe((response)=> console.log(response));
   };
   setShowDetails = (id: string):void => {
     const nextValue = this.dataBase.value;
@@ -111,7 +113,10 @@ export class DataService {
           };
       }
       else { return value; }
-    }))
+    }));
+    this.subscription = this.http.put(environment.API_URL, { id: id, task: undefined, complete: true })
+    .subscribe((reponse)=> console.log(reponse));
+
   };
   cleanUp = ():void => {
     this.subscription.unsubscribe();
