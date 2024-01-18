@@ -47,8 +47,6 @@ export class DataService {
     }));
   };
   addData = (newTask: string) => {
-    //make it so that when receiving the post request response
-    //update only the id with the one provided in the response
     const tempId = Date.now().toString();
     const nextValue = this.dataBase.value;
     nextValue.push({
@@ -59,7 +57,6 @@ export class DataService {
       showDetails: false,
     })
     this.sortByLatest(nextValue);
-
     this.http.post<CreateResponse>(environment.API_URL, { task: newTask, date: new Date()})
         .subscribe((response)=> this.setId(tempId, response.insertedId));
   };
@@ -138,5 +135,4 @@ export class DataService {
   cleanUp = ():void => {
     this.subscription.unsubscribe();
   }
-
 }

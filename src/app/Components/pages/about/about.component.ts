@@ -4,21 +4,21 @@ import { Component } from '@angular/core';
   selector: 'app-about',
   template: `<main>
     <!-- Intro -->
-    <div>
-      <h1>Jose Moreno</h1>
-      <p>
+    <div class="flex flex-col text-very-dark-blue items-center justify-center">
+      <h1 class="font-extrabold italic text-3xl">Jose Moreno</h1>
+      <p class="text-dark-blue leading-6 mx-6 mt-3 text-center">
         Hola! Me alegro de verte por aca, te cuento un poco. Este proyecto fue
         realizado con intenciones de solidificar mis conocimientos basicos en el
         uso del Framework Angular para crear aplicaciones dinamicas, teniendo
         como inspiracion la implementacion de codigo limpio y sus conveciones
       </p>
-      <h3>Creado Con:</h3>
-      <div>
-        <a href=""><img src="" alt="" /></a>
-        <a href=""><img src="" alt="" /></a>
-        <a href=""><img src="" alt="" /></a>
-        <a href=""><img src="" alt="" /></a>
-        <a href=""><img src="" alt="" /></a>
+      <h3 class="text-2xl font-extrabold italic mt-8">Creado Con:</h3>
+      <div class="flex space-x-4">
+       <div class="bg-very-dark-blue rounded-full"><a href=""><img src="" alt="" />cir</a></div>
+       <div class="bg-very-dark-blue rounded-full"><a href=""><img src="" alt="" />cir</a></div>
+       <div class="bg-very-dark-blue rounded-full"><a href=""><img src="" alt="" />cir</a></div>
+       <div class="bg-very-dark-blue rounded-full"><a href=""><img src="" alt="" />cir</a></div>
+       <div class="bg-very-dark-blue rounded-full"><a href=""><img src="" alt="" />cir</a></div>
       </div>
     </div>
     <!-- links -->

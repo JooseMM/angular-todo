@@ -27,5 +27,6 @@ export class TaskListComponent implements OnDestroy{
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.dataService.cleanUp();
   }
 }
