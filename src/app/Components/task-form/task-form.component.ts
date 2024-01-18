@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from '../../data.service';
 
 @Component({
@@ -35,7 +35,7 @@ import { DataService } from '../../data.service';
         />
         <button
           type="submit"
-          class="bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-medium italic text-shadow | sm:px-14 sm:py-3 sm:rounded"
+          class="transition duration-200 bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-medium italic text-shadow | sm:px-14 sm:py-3 lg:hover:bg-white lg:hover:text-very-dark-blue sm:rounded"
         >
           AGREGAR
         </button>
