@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-footer',
   template: `<div class="w-full bg-very-dark-blue py-20 ">
     <ul
-      class="flex flex-col space-y-8 justify-center items-center text-center | xl:items-start xl:space-y-0 xl:grid grid-cols-4 mx-auto max-w-2xl"
+      class="flex flex-col space-y-8 justify-center items-center text-center | xl:items-start xl:space-y-0 xl:grid grid-cols-4 xl:mx-auto xl:max-w-2xl
+      || lg:flex-row lg:space-y-0 lg:items-start lg:space-x-16"
     >
       <li class="flex flex-col text-white">
         <a class="font-bold mb-4" href="">Todo App</a>
