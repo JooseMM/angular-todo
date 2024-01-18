@@ -5,9 +5,9 @@
 html {
   font-family: "Nunito Sans Variable", sans-serif;
   background-color: #DEE6ED;
- 
+
 }
-  
+
 
 @layer utilities {
   .text-shadow {
@@ -22,5 +22,8 @@ html {
   .split-background {
     background: linear-gradient(to bottom, #DEE6ED 70%, white 30%);
   }
-  
+  .split-navbar-bg {
+    background: linear-gradient(to left, #394D60 50%, #DEE6ED 50%);
+  }
+
 }

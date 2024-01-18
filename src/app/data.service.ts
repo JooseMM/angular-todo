@@ -15,6 +15,7 @@ export class DataService {
   }
 
   fetchData = ():Observable<ListType[]> => {
+    console.log("Execute!");
     return this.http.get<rawjson[]>(environment.API_URL)
     .pipe(
       map((value: rawjson[]) => value.map((prop: rawjson)=> ({
@@ -26,7 +27,6 @@ export class DataService {
        }))))
   }
   getData = () => {
-   this.subscription = this.fetchData().subscribe((value:ListType[]) => this.dataBase.next(value));
    return this.dataBase.asObservable();
   };
 
@@ -65,18 +65,18 @@ export class DataService {
     let finishTask: ListType[] = [];
     let pendingTask: ListType[] = [];
 
-    finishTask = data
-      .filter((match) => match.complete)
-      .sort((a, b) => {
-        if (a.date > b.date) return -1;
-        if (a.date < b.date) return 1;
-        return 0;
-      });
     pendingTask = data
       .filter((match) => !match.complete)
       .sort((a, b) => {
-        if (a.date > b.date) return -1;
-        if (a.date < b.date) return 1;
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
+        return 0;
+      });
+    finishTask = data
+      .filter((match) => match.complete)
+      .sort((a, b) => {
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
         return 0;
       });
 
