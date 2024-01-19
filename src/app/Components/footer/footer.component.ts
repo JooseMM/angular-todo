@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -8,18 +9,18 @@ import { Component } from '@angular/core';
       || lg:flex-row lg:space-y-0 lg:items-start lg:space-x-16"
     >
       <li class="flex flex-col text-white">
-        <a class="font-bold mb-4" href="">Todo App</a>
+        <a class="font-bold mb-4" routerLink="/home" >Todo App</a>
         <span>Sep 2023</span>
       </li>
       <li class="flex flex-col  text-white">
-        <a class="font-bold mb-4" href="">Contact</a>
+        <p class="font-bold mb-4">Contacto</p>
         <a class="mb-2" href="">Portfolio</a>
         <a class="mb-2" href="">Email</a>
       </li>
       <li class="flex flex-col  text-white">
-        <a class="font-bold mb-4" href="">Pages</a>
-        <a class="mb-2" href="">Home</a>
-        <a class="mb-2" href="">App</a>
+        <p class="font-bold mb-4">Pages</p>
+        <a class="mb-2" routerLink="/home">Home</a>
+        <a class="mb-2" routerLink="/application">App</a>
         <a href="">About</a>
       </li>
       <li class="flex flex-col  text-white">
@@ -38,4 +39,7 @@ import { Component } from '@angular/core';
     </ul>
   </div>`,
 })
-export class FooterComponent {}
+export class FooterComponent {
+
+  constructor(public Router: Router) {}
+}
