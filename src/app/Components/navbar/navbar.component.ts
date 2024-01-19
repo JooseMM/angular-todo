@@ -59,6 +59,7 @@ import { Router } from '@angular/router';
       >
       <li>
         <a
+        class="transition duration-200"
         [ngClass]="isAboutPage ? 'hover:text-white/100':'hover:text-very-dark-blue/100' "
         routerLink="/home"
         routerLinkActive="font-bold text-very-dark-blue/100">
@@ -67,6 +68,7 @@ import { Router } from '@angular/router';
       </li>
       <li>
         <a
+        class="transition duration-200"
         [ngClass]="isAboutPage ? 'hover:text-white/100':'hover:text-very-dark-blue/100' "
         routerLink="/application"
         routerLinkActive="font-bold text-very-dark-blue/100">
@@ -75,6 +77,7 @@ import { Router } from '@angular/router';
       </li>
       <li>
         <a
+        class="transition duration-200"
         [ngClass]="isAboutPage ? 'hover:text-white/100':'hover:text-very-dark-blue/100' "
         routerLink="/about"
         routerLinkActive="font-bold text-white/100">
