@@ -12,6 +12,16 @@ export class TaskListComponent implements OnDestroy{
   list: ListType[] = [];
   subscription: Subscription;
 
+  clearComplete = ():void => {
+    this.dataService.clearCompletes();
+  }
+  getSpanishDate = ():string => {
+    const date = new Date();
+    const formattedDate = date.toLocaleString('es',
+    { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'})
+    const charToUppercase = formattedDate.at(0)!.toUpperCase();
+    return charToUppercase.concat(formattedDate.slice(1));
+  }
   deleteItem = (id: string) => {
     this.dataService.deleteData(id);
   };

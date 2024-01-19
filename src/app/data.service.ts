@@ -99,6 +99,11 @@ export class DataService {
         .subscribe((response)=> console.log(response));
 
   };
+  clearCompletes = ():void => {
+    const nextValue = this.dataBase.value;
+    this.dataBase.next(nextValue.filter((value: ListType) =>  !value.complete  ));
+
+  }
   setShowDetails = (id: string):void => {
     const nextValue = this.dataBase.value;
     this.dataBase.next(nextValue.map((value): ListType => {
