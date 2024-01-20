@@ -21,6 +21,11 @@ html {
     background-repeat: no-repeat;
     background-size:cover;
   }
+  .background-mb {
+    background-image: url("./assets/Images/bg-form-mobile.svg");
+    background-repeat: no-repeat;
+    background-size:cover;
+  }
 
   .split-background {
     background: linear-gradient(to bottom, #DEE6ED 70%, white 30%);

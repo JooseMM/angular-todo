@@ -13,7 +13,7 @@ import { DataService } from '../../data.service';
     <form
       (submit)="submit()"
       #basicForm="ngForm"
-      class="py-6  w-[90%] max-w-5xl rounded-lg background drop-shadow-2xl relative | sm:px-6 sm:py-7 | lg:px-10 lg:mt-2 shadow-xl"
+      class="py-6  w-[90%] max-w-5xl rounded-lg background-mb drop-shadow-2xl relative | sm:px-6 sm:py-7 | lg:background lg:px-10 lg:mt-2 shadow-xl"
     >
       <label for="new-task"
         ><h1
@@ -35,7 +35,7 @@ import { DataService } from '../../data.service';
         />
         <button
           type="submit"
-          class="transition duration-200 bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-medium italic text-shadow | sm:px-14 sm:py-3 lg:hover:bg-white lg:hover:text-very-dark-blue sm:rounded"
+          class="text-shadow outline-2 outline-white/30 tracking-wider  transition duration-200 bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-semibold italic text-shadow | lg:hover:outline sm:px-14 sm:py-3 lg:hover:bg-very-dark-blue sm:rounded lg:text-base"
         >
           AGREGAR
         </button>

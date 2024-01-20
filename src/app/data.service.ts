@@ -15,7 +15,6 @@ export class DataService {
   }
 
   fetchData = ():Observable<ListType[]> => {
-    console.log("Execute!");
     return this.http.get<rawjson[]>(environment.API_URL)
     .pipe(
       map((value: rawjson[]) => value.map((prop: rawjson)=> ({
