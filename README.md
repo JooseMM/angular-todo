@@ -16,13 +16,13 @@ que empiezas a dominar
 
 Este proyecto tuvo como prioridad solidificar mis habilidades en:
 
--Angular
--Express JS
--Tailwind
--Git
--Figma
--Diseño UX UI
--GIMP(Edicion de  fotografia)
+- Angular
+- Express JS
+- Tailwind
+- Git
+- Figma
+- Diseño UX UI
+- GIMP(Edicion de  fotografia)
 
 ##  API, repositorio
 
