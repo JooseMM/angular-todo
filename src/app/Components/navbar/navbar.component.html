@@ -38,7 +38,7 @@
         >Nosotros</a
       >
     </li>
-    <li class="flex relative items-center">
+    <li class="relative items-center hidden">
         <ng-container *ngIf="userLoggedIn; else elseImg">
         <img src="../../../assets/Images/profile-pic.svg" width="40" height="40" alt="Foto de perfil"(click)="toggleShowUserOptions()" />
         </ng-container>
@@ -73,7 +73,7 @@
   </button>
       <form *ngIf="loggingIn && !showUserOptions" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
         class="flex-col z-10 text-white bg-very-dark-blue rounded-md px-6 py-5 absolute flex
-        top-[150%] left-2 right-2 mx-auto max-w-xs shadow-2xl">
+        top-[150%] left-2 right-2 mx-auto max-w-xs shadow-2xl | lg:hidden">
         <h3 class="font-bold text-lg">Iniciar Sesion</h3>
         <button (click)="toggleUserLoggingIn()" class="absolute right-5 top-4">
           <svg width="20" height="20" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
