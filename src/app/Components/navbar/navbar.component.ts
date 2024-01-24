@@ -16,8 +16,6 @@ export class NavbarComponent implements OnInit {
   userCheckSubscription?: Subscription;
   unknownUserPicture = "../../../assets/Images/unkwon-user.svg";
   knownUserPicture = "../../../assets/Images/profile-pic.svg";
-  menuIconSrc: string = "../../assets/Icons/menu-icon.svg";
-  menuIconClass: string = "w-8 h-6 md:hidden";
   username = '';
   password = '';
 
@@ -50,12 +48,6 @@ export class NavbarComponent implements OnInit {
   }
   mobileMenuToggle = ():void => {
     this.menuOpen = !this.menuOpen;
-    if (this.menuOpen) {
-      this.menuIconSrc = '../../assets/Icons/menu-icon-close.svg';
-      this.menuIconClass = 'w-8 h-6 md:hidden';
-    } else {
-      this.menuIconSrc = '../../assets/Icons/menu-icon.svg';
-      this.menuIconClass = 'w-8 h-6 md:hidden';
-    }
+    this.showUserOptions = false;
   };
 }

@@ -35,13 +35,13 @@ export class DataService {
     return this.userLoggedIn.asObservable();
   }
   checkCurrentUserSession = ():Subscription => {
-    return this.http.get<UserLoggedIn>(`${environment.API_TEST}userLoggedIn`, { withCredentials: true })
+    return this.http.get<UserLoggedIn>(`${environment.API_URL}userLoggedIn`, { withCredentials: true })
       .subscribe((response:UserLoggedIn)=> {
           this.userLoggedIn.next(response.userLoggedIn);
       });
   }
   fetchData = ():Subscription => {
-    return this.http.get<HttpGetTasks>(`${environment.API_TEST}tasks`,{ withCredentials: true})
+    return this.http.get<HttpGetTasks>(`${environment.API_URL}tasks`,{ withCredentials: true})
     .pipe(map((value: HttpGetTasks) => value.tasks)).subscribe((taskArray:Task[])=> {
       if(taskArray.length > 0) {
         this.sortByLatest(taskArray);
@@ -49,7 +49,7 @@ export class DataService {
     });
   }
   userLogin = (payload: HttpPostLogin) => {
-    this.http.post<UserLoggedIn>(`${environment.API_TEST}login`, payload, { withCredentials: true})
+    this.http.post<UserLoggedIn>(`${environment.API_URL}login`, payload, { withCredentials: true})
         .subscribe((response: UserLoggedIn) => {
           if(response.userLoggedIn) {
           this.userLoggedIn.next(true);
@@ -58,7 +58,7 @@ export class DataService {
       });
   };
   userLogout = () => {
-    this.http.get<UserLoggedIn>(`${environment.API_TEST}logout`, { withCredentials: true})
+    this.http.get<UserLoggedIn>(`${environment.API_URL}logout`, { withCredentials: true})
       .subscribe((response: UserLoggedIn) => {
         if(response.ok) {
           this.userLoggedIn.next(false);
@@ -94,7 +94,7 @@ export class DataService {
     this.sortByLatest(nextValue);
     if(this.userLoggedIn.value) {
       const payload = { task: newTask, date: new Date()};
-      this.userActionsSubscription = this.http.post<CreateResponse>(`${environment.API_TEST}task`, payload, { withCredentials: true })
+      this.userActionsSubscription = this.http.post<CreateResponse>(`${environment.API_URL}task`, payload, { withCredentials: true })
       .subscribe((response)=> {
         if(response.ok){
           this.setId(tempId, response.insertedId)
@@ -132,7 +132,7 @@ export class DataService {
     this.dataBase.next(nextValue.filter((value: Task) =>  value._id != deleteId ));
 
     if(this.userLoggedIn.value) {
-      this.userActionsSubscription = this.http.delete<ModifiedResponse>(`${environment.API_TEST}delete/${deleteId}`, { withCredentials: true })
+      this.userActionsSubscription = this.http.delete<ModifiedResponse>(`${environment.API_URL}delete/${deleteId}`, { withCredentials: true })
       .subscribe((response: ModifiedResponse)=> {
           if(response.ok) {
             this.notifications.next(`Operacion exitosa: ${response.modifiedCount} tarea eliminada.`);
@@ -146,7 +146,7 @@ export class DataService {
     const nextValue = this.dataBase.value;
     this.dataBase.next(nextValue.filter((value: Task) =>  !value.complete  ));
     if(this.userLoggedIn.value) {
-      this.userActionsSubscription = this.http.delete<ModifiedResponse>(`${environment.API_TEST}delete/complete`, { withCredentials: true })
+      this.userActionsSubscription = this.http.delete<ModifiedResponse>(`${environment.API_URL}delete/complete`, { withCredentials: true })
         .subscribe((response: ModifiedResponse)=>{
           if(response.ok){
             this.notifications.next(`Operacion exitosa: ${response.modifiedCount} tarea/s eliminada/s.`);
@@ -187,7 +187,7 @@ export class DataService {
     }));
     if(this.userLoggedIn.value) {
       const payload = { id: id, task: undefined, complete: true };
-      this.userActionsSubscription = this.http.put<ModifiedResponse>(`${environment.API_TEST}task`, payload, { withCredentials: true })
+      this.userActionsSubscription = this.http.put<ModifiedResponse>(`${environment.API_URL}task`, payload, { withCredentials: true })
       .subscribe((response: ModifiedResponse)=> {
         if(response.ok){
           this.notifications.next(`Operacion exitosa: ${response.modifiedCount} tarea completada.`);
