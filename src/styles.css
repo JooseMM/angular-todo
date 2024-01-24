@@ -1,13 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "@fontsource-variable/nunito-sans/wght-italic.css";
 
 html {
-  font-family: "Nunito Sans Variable", sans-serif;
+  font-family: 'Nunito Sans Variable', sans-serif;
   background-color: #DEE6ED;
-
 }
-
 
 @layer utilities {
   .text-shadow {

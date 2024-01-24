@@ -1,30 +1,59 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ListType, rawjson, CreateResponse, task } from './list-type';
+import { ListType, RawJson, CreateResponse, UserLoggedIn, HttpGetTasks, HttpPostLogin } from './list-type';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
+import { BehaviorSubject, Subscription, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
   private dataBase = new BehaviorSubject<ListType[]>([]);
-  subscription : Subscription;
+  private userLoggedIn = new BehaviorSubject<boolean>(false);
+  //subcription variable
+  checkSessionSubcription?: Subscription;
+  userLoggedInSubscription?: Subscription;
+  fetchUserTaskSubscription?: Subscription;
+
   constructor(private http :HttpClient) {
-    this.subscription = this.fetchData().subscribe((value:ListType[]) => this.sortByLatest(value));
+    this.checkSessionSubcription = this.checkCurrentUserSession();
+    this.userLoggedInSubscription = this.userLoggedIn.subscribe((loggedIn: boolean)=> {
+      if(loggedIn){
+        this.fetchUserTaskSubscription = this.fetchData();
+      }
+    });
   }
 
-  fetchData = ():Observable<ListType[]> => {
-    return this.http.get<rawjson[]>(environment.API_URL)
-    .pipe(
-      map((value: rawjson[]) => value.map((prop: rawjson)=> ({
-        _id: prop._id,
-         task: prop.task,
-         complete: prop.complete,
-         date: prop.date,
-         showDetails: false
-       }))))
+  checkCurrentUserSession = ():Subscription => {
+    return this.http.get<UserLoggedIn>(`${environment.API_TEST}userLoggedIn`, { withCredentials: true })
+      .subscribe((response:UserLoggedIn)=> {
+        if(response.ok) {
+          this.userLoggedIn.next(true);
+        }
+      });
   }
+
+  fetchData = ():Subscription => {
+    return this.http.get<HttpGetTasks>(`${environment.API_TEST}tasks`,{ withCredentials: true})
+    .pipe(map((value: HttpGetTasks) => value.tasks)).subscribe((taskArray)=> {
+      if(taskArray.length > 0) {
+        this.sortByLatest(taskArray);
+      }
+    });
+  }
+
+  userLogin = (payload: HttpPostLogin) => {
+    this.http.post<UserLoggedIn>(`${environment.API_TEST}login`, payload, { withCredentials: true})
+        .subscribe((response: UserLoggedIn) => {
+          if(response.ok) {
+            this.userLoggedIn.next(true);
+            console.log(response);
+          } else {
+            console.log(response);
+          }
+        });
+  };
+
   getData = () => {
    return this.dataBase.asObservable();
   };
@@ -86,9 +115,9 @@ export class DataService {
     const nextValue = this.dataBase.value;
     this.dataBase.next(nextValue.filter((value: ListType) =>  value._id != deleteId ));
 
-      this.subscription = this.http.delete<rawjson[]>(`${environment.API_URL}delete/${deleteId}`)
+    this.http.delete<RawJson[]>(`${environment.API_URL}delete/${deleteId}`)
       .pipe(
-        map((value: rawjson[]) => value.map((prop: rawjson)=> ({
+        map((value: RawJson[]) => value.map((prop: RawJson)=> ({
           _id: prop._id,
           task: prop.task,
           complete: prop.complete,
@@ -132,11 +161,12 @@ export class DataService {
       }
       else { return value; }
     }));
-    this.subscription = this.http.put(environment.API_URL, { id: id, task: undefined, complete: true })
+    this.http.put(environment.API_URL, { id: id, task: undefined, complete: true })
     .subscribe((reponse)=> console.log(reponse));
 
   };
   cleanUp = ():void => {
-    this.subscription.unsubscribe();
+    if(this.checkSessionSubcription)
+    this.checkSessionSubcription.unsubscribe();
   }
 }
