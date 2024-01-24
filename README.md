@@ -21,6 +21,7 @@ Este proyecto tuvo como prioridad solidificar mis habilidades en:
 -Tailwind
 -Git
 -Figma
+-Diseño UX UI
 -GIMP(Edicion de  fotografia)
 
 ##  API, repositorio
