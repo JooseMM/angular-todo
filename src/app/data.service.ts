@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ListType, RawJson, CreateResponse, UserLoggedIn, HttpGetTasks, HttpPostLogin } from './list-type';
+import { Task, CreateResponse, UserLoggedIn, HttpGetTasks, HttpPostLogin, ModifiedResponse } from './list-type';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, Subscription, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private dataBase = new BehaviorSubject<ListType[]>([]);
+  private dataBase = new BehaviorSubject<Task[]>([]);
   private userLoggedIn = new BehaviorSubject<boolean>(false);
+  private notifications = new BehaviorSubject<string>('');
   //subcription variable
   checkSessionSubcription?: Subscription;
   userLoggedInSubscription?: Subscription;
   fetchUserTaskSubscription?: Subscription;
+  userActionsSubscription?: Subscription;
 
   constructor(private http :HttpClient) {
     this.checkSessionSubcription = this.checkCurrentUserSession();
@@ -23,46 +25,51 @@ export class DataService {
       }
     });
   }
-
+  getData = ():Observable<Task[]> => {
+   return this.dataBase.asObservable();
+  };
+  getNotifications = ():Observable<string> => {
+    return this.notifications.asObservable();
+  }
+  getCurrentUser = ():Observable<boolean> => {
+    return this.userLoggedIn.asObservable();
+  }
   checkCurrentUserSession = ():Subscription => {
     return this.http.get<UserLoggedIn>(`${environment.API_TEST}userLoggedIn`, { withCredentials: true })
       .subscribe((response:UserLoggedIn)=> {
-        if(response.ok) {
-          this.userLoggedIn.next(true);
-        }
+          this.userLoggedIn.next(response.userLoggedIn);
       });
   }
-
   fetchData = ():Subscription => {
     return this.http.get<HttpGetTasks>(`${environment.API_TEST}tasks`,{ withCredentials: true})
-    .pipe(map((value: HttpGetTasks) => value.tasks)).subscribe((taskArray)=> {
+    .pipe(map((value: HttpGetTasks) => value.tasks)).subscribe((taskArray:Task[])=> {
       if(taskArray.length > 0) {
         this.sortByLatest(taskArray);
       }
     });
   }
-
   userLogin = (payload: HttpPostLogin) => {
     this.http.post<UserLoggedIn>(`${environment.API_TEST}login`, payload, { withCredentials: true})
         .subscribe((response: UserLoggedIn) => {
-          if(response.ok) {
-            this.userLoggedIn.next(true);
-            console.log(response);
-          } else {
-            console.log(response);
-          }
-        });
+          if(response.userLoggedIn) {
+          this.userLoggedIn.next(true);
+          this.notifications.next(`Bienvenido, ${response.user}`);
+        }
+      });
   };
-
-  getData = () => {
-   return this.dataBase.asObservable();
+  userLogout = () => {
+    this.http.get<UserLoggedIn>(`${environment.API_TEST}logout`, { withCredentials: true})
+      .subscribe((response: UserLoggedIn) => {
+        if(response.ok) {
+          this.userLoggedIn.next(false);
+          this.notifications.next("Usuario cerro sesion exitosamente");
+        }
+      });
   };
-
   setId = (tempID: string, ID: string):void => {
     const nextValue = this.dataBase.value;
-    this.dataBase.next(nextValue.map((value): ListType => {
+    this.dataBase.next(nextValue.map((value): Task => {
       if(value._id === tempID) {
-        console.log(value._id, ID)
         return {
           _id: ID,
           task: value.task,
@@ -85,13 +92,23 @@ export class DataService {
       showDetails: false,
     })
     this.sortByLatest(nextValue);
-    this.http.post<CreateResponse>(environment.API_URL, { task: newTask, date: new Date()})
-        .subscribe((response)=> this.setId(tempId, response.insertedId));
+    if(this.userLoggedIn.value) {
+      const payload = { task: newTask, date: new Date()};
+      this.userActionsSubscription = this.http.post<CreateResponse>(`${environment.API_TEST}task`, payload, { withCredentials: true })
+      .subscribe((response)=> {
+        if(response.ok){
+          this.setId(tempId, response.insertedId)
+          this.notifications.next(`Operacion exitosa: ${response.modifiedCount} tarea creada.`);
+        } else {
+          this.notifications.next(`Operacion fallida: Codigo ${response.status}`);
+        }
+      });
+    }
   };
 
-  sortByLatest = (data: ListType[]):void => {
-    let finishTask: ListType[] = [];
-    let pendingTask: ListType[] = [];
+  sortByLatest = (data: Task[]):void => {
+    let finishTask: Task[] = [];
+    let pendingTask: Task[] = [];
 
     pendingTask = data
       .filter((match) => !match.complete)
@@ -110,31 +127,38 @@ export class DataService {
 
     this.dataBase.next([...pendingTask, ...finishTask]);
   };
-
   deleteData = (deleteId: string):void => {
     const nextValue = this.dataBase.value;
-    this.dataBase.next(nextValue.filter((value: ListType) =>  value._id != deleteId ));
+    this.dataBase.next(nextValue.filter((value: Task) =>  value._id != deleteId ));
 
-    this.http.delete<RawJson[]>(`${environment.API_URL}delete/${deleteId}`)
-      .pipe(
-        map((value: RawJson[]) => value.map((prop: RawJson)=> ({
-          _id: prop._id,
-          task: prop.task,
-          complete: prop.complete,
-          date: prop.date,
-          showDetails: false
-        }))))
-        .subscribe((response)=> console.log(response));
-
+    if(this.userLoggedIn.value) {
+      this.userActionsSubscription = this.http.delete<ModifiedResponse>(`${environment.API_TEST}delete/${deleteId}`, { withCredentials: true })
+      .subscribe((response: ModifiedResponse)=> {
+          if(response.ok) {
+            this.notifications.next(`Operacion exitosa: ${response.modifiedCount} tarea eliminada.`);
+          } else {
+            this.notifications.next(`Operacion fallida: Codigo ${response.status}`);
+          }
+      })
+    }
   };
   clearCompletes = ():void => {
     const nextValue = this.dataBase.value;
-    this.dataBase.next(nextValue.filter((value: ListType) =>  !value.complete  ));
-
+    this.dataBase.next(nextValue.filter((value: Task) =>  !value.complete  ));
+    if(this.userLoggedIn.value) {
+      this.userActionsSubscription = this.http.delete<ModifiedResponse>(`${environment.API_TEST}delete/complete`, { withCredentials: true })
+        .subscribe((response: ModifiedResponse)=>{
+          if(response.ok){
+            this.notifications.next(`Operacion exitosa: ${response.modifiedCount} tarea/s eliminada/s.`);
+          } else {
+            this.notifications.next(`Operacion fallida: Codigo ${response.status}`);
+          }
+        })
+    }
   }
   setShowDetails = (id: string):void => {
     const nextValue = this.dataBase.value;
-    this.dataBase.next(nextValue.map((value): ListType => {
+    this.dataBase.next(nextValue.map((value): Task => {
       if(value._id === id) {
         return {
           _id: value._id,
@@ -149,7 +173,7 @@ export class DataService {
   };
   completedTask = (id: string):void => {
     const updateState = this.dataBase.value;
-    this.sortByLatest(updateState.map((value): ListType => {
+    this.sortByLatest(updateState.map((value): Task => {
       if(value._id === id) {
         return {
           _id: value._id,
@@ -161,12 +185,23 @@ export class DataService {
       }
       else { return value; }
     }));
-    this.http.put(environment.API_URL, { id: id, task: undefined, complete: true })
-    .subscribe((reponse)=> console.log(reponse));
+    if(this.userLoggedIn.value) {
+      const payload = { id: id, task: undefined, complete: true };
+      this.userActionsSubscription = this.http.put<ModifiedResponse>(`${environment.API_TEST}task`, payload, { withCredentials: true })
+      .subscribe((response: ModifiedResponse)=> {
+        if(response.ok){
+          this.notifications.next(`Operacion exitosa: ${response.modifiedCount} tarea completada.`);
+        } else {
+          this.notifications.next(`Operacion fallida: Code ${response.status}`);
+        }
+      });
+    }
 
   };
   cleanUp = ():void => {
-    if(this.checkSessionSubcription)
-    this.checkSessionSubcription.unsubscribe();
+    if(this.checkSessionSubcription) { this.checkSessionSubcription.unsubscribe(); }
+    if(this.userActionsSubscription) { this.userActionsSubscription.unsubscribe(); }
+    if(this.fetchUserTaskSubscription) { this.fetchUserTaskSubscription.unsubscribe(); }
+    if(this.userLoggedInSubscription) { this.userLoggedInSubscription.unsubscribe(); }
   }
 }

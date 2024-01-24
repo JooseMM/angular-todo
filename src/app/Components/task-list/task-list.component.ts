@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ListType } from '../../list-type';
+import { Task } from '../../list-type';
 import { DataService } from '../../data.service';
 import { Subscription } from 'rxjs';
 
@@ -9,16 +9,15 @@ import { Subscription } from 'rxjs';
   templateUrl: './task-list.component.html',
 })
 export class TaskListComponent implements OnDestroy{
-  list: ListType[] = [];
-  subscription: Subscription;
+  list: Task[] = [];
+  dataSubscription: Subscription;
 
   clearComplete = ():void => {
     this.dataService.clearCompletes();
   }
   getSpanishDate = ():string => {
     const date = new Date();
-    const formattedDate = date.toLocaleString('es',
-                                              { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'})
+    const formattedDate = date.toLocaleString('es', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'})
     const charToUppercase = formattedDate.at(0)!.toUpperCase();
     return charToUppercase.concat(formattedDate.slice(1));
   }
@@ -32,13 +31,11 @@ export class TaskListComponent implements OnDestroy{
     this.dataService.setShowDetails(id);
   };
   constructor(private dataService: DataService) {
-    this.subscription = this.dataService.getData()
-    .subscribe((value: ListType[]) => this.list = value  );
-    //  dev thing
-   //  this.list = [{ _id: '123', task: 'Do homework', date: new Date(), complete: false, showDetails: false}, { _id: '123', task: 'Do homework', date: new Date(), complete: false, showDetails: false}]
+    this.dataSubscription = this.dataService.getData()
+    .subscribe((value: Task[]) => this.list = value  );
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.dataSubscription.unsubscribe();
     this.dataService.cleanUp();
   }
 }
