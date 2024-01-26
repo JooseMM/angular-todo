@@ -77,7 +77,7 @@
         <small *ngIf="passError.errors?.['required'] && (passError.dirty || passError.touched)" class="text-red-400">Usuario o contraseña incorrecta</small>
         <div class="flex items-start justify-between">
           <a routerLink="/about"><small class="opacity-70">Olvide mi contraseña</small></a>
-            <button type="submit" [disabled]="form.invalid" (click)="toggleShowUserOptions()" class="bg-orange-btn text-lg font-bold px-8 py-2 rounded mt-4 disabled:opacity-50 ">Ingresar</button>
+            <button type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)" class="bg-orange-btn text-lg font-bold px-8 py-2 rounded mt-4 disabled:opacity-50 ">Ingresar</button>
         </div>
       </form>
 
@@ -163,7 +163,7 @@
         <small *ngIf="passError.errors?.['required'] && (passError.dirty || passError.touched)" class="text-red-400">Usuario o contraseña incorrecta</small>
         <div class="flex items-start justify-between">
           <a routerLink="/about"><small class="opacity-70">Olvide mi contraseña</small></a>
-            <button type="submit" [disabled]="form.invalid" (click)="toggleShowUserOptions()" class="bg-orange-btn text-base font-bold invalid:opacity-50 py-1 rounded mt-3 px-6">Ingresar</button>
+            <button type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)" class="bg-orange-btn text-base font-bold invalid:opacity-50 py-1 rounded mt-3 px-6">Ingresar</button>
         </div>
       </form>
     </div>
