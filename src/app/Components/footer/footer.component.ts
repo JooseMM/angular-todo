@@ -15,14 +15,14 @@ import { Router } from '@angular/router';
       </li>
       <li class="flex flex-col  text-white">
         <p class="font-bold mb-4">Contacto</p>
-        <a class="mb-2" href="">Portfolio</a>
+        <a class="mb-2" href="">Portafolio</a>
         <a class="mb-2" href="">Email</a>
       </li>
       <li class="flex flex-col  text-white">
-        <p class="font-bold mb-4">Pages</p>
-        <a class="mb-2" routerLink="/home">Home</a>
+        <p class="font-bold mb-4">Páginas</p>
+        <a class="mb-2" routerLink="/home">Inicio</a>
         <a class="mb-2" routerLink="/application">App</a>
-        <a href="">About</a>
+        <a href="">Nosotros</a>
       </li>
       <li class="flex flex-col  text-white">
         <span class="font-bold mb-4">Images on Freepik by</span>

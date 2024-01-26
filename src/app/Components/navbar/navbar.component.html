@@ -13,7 +13,7 @@
 
   <!-- Mobile navigation menu -->
 
-  <ul *ngIf="menuOpen" class="flex space-x-[10vw] text-very-dark-blue items-center | md:hidden">
+  <ul *ngIf="menuOpen" class="flex space-x-[10vw] text-very-dark-blue items-center | lg:hidden">
     <li>
       <a
         routerLink="/home"
@@ -67,7 +67,7 @@
     <img
       [src]="!menuOpen ? '../../assets/Icons/menu-icon.svg' : '../../assets/Icons/menu-icon-close.svg'"
       alt="hamburguer menu"
-      class="w-8 h-6 md:hidden ml-4"
+      class="w-8 h-6 ml-4 | lg:hidden"
       [class.ml-4]="menuOpen"
     />
   </button>
@@ -167,7 +167,7 @@
           class="whitespace-nowrap absolute -bottom-full right-0 font-bold px-6 py-2 rounded-md
           | lg:bottom-[-110%]">Cerrar Sesion</button>
       </div>
-      <form *ngIf="loggingIn" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
+      <form *ngIf="loggingIn && showUserOptions" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
         class="flex-col w-[300] z-10 text-white bg-very-dark-blue rounded-md px-6 py-5 absolute top-24 hidden
         | lg:flex lg:top-auto lg:bottom-[-135%] lg:right-[10%] lg:w-[300px] shadow-2xl">
         <h3 class="font-bold text-lg">Iniciar Sesion</h3>

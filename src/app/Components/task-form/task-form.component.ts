@@ -19,7 +19,7 @@ import { DataService } from '../../data.service';
         ><h1
           class="text-2xl font-medium text-white italic pl-4 | sm:mt-5 md:text-3xl"
         >
-          Nueva Tarea
+        Ingreso de tareas
         </h1></label
       >
 
@@ -35,9 +35,9 @@ import { DataService } from '../../data.service';
         />
         <button
           type="submit"
-          class="text-shadow outline-2 outline-white/30 tracking-wider  transition duration-200 bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-semibold italic text-shadow | lg:hover:outline sm:px-14 sm:py-3 lg:hover:bg-very-dark-blue sm:rounded lg:text-base"
+          class="text-shadow outline-2 outline-white/30 tracking-wider  transition duration-200 bg-orange-btn ml-3 py-2 px-5 rounded-md text-white font-bold text-shadow | lg:hover:outline sm:px-14 sm:py-3 lg:hover:bg-very-dark-blue sm:rounded lg:text-base"
         >
-          AGREGAR
+          Agregar
         </button>
       </div>
     </form>

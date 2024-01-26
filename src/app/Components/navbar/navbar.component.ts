@@ -36,7 +36,6 @@ export class NavbarComponent implements OnInit {
     this.toggleUserLoggingIn();
   }
   toggleUserLoggingIn = ():void => {
-    if(this.showUserOptions) { this.toggleShowUserOptions(); }
     this.loggingIn = !this.loggingIn;
   }
   toggleShowUserOptions = ():void => {
