@@ -5,15 +5,15 @@ import { DataService } from '../../data.service';
   selector: 'app-task-form',
   template: ` <main class="flex flex-col items-center split-background">
     <h2
-      class="my-12 font-bold text-5xl italic text-very-dark-blue | lg:mt-20 lg:text-6xl"
+      class="hidden my-12 font-bold text-5xl italic text-very-dark-blue | lg:block lg:mt-20 lg:text-6xl"
     >
       JM
     </h2>
-
-    <form
+    <img class="my-10 : lg:hidden" src="../../../assets/Images/profile-pic.svg"/>
+<form
       (submit)="submit()"
       #basicForm="ngForm"
-      class="py-6  w-[90%] max-w-5xl rounded-lg background-mb drop-shadow-2xl relative | sm:px-6 sm:py-7 | lg:background lg:px-10 lg:mt-2 shadow-xl"
+      class="py-6  w-[90%] max-w-5xl rounded-lg background-mb drop-shadow-2xl relative | sm:px-6 sm:py-7 | md:background | lg:px-10 lg:mt-2 shadow-xl"
     >
       <label for="new-task"
         ><h1

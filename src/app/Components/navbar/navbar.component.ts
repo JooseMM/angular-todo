@@ -8,7 +8,7 @@ import { DataService } from 'src/app/data.service';
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
-  menuOpen: boolean = false;
+  menuOpen = false;
   isAboutPage: boolean;
   userLoggedIn = false;
   loggingIn = false;
@@ -36,9 +36,18 @@ export class NavbarComponent implements OnInit {
     this.toggleUserLoggingIn();
   }
   toggleUserLoggingIn = ():void => {
+    if(this.menuOpen) {
+      this.menuOpen = false;
+    }
+    if(this.showUserOptions ) {
+      this.showUserOptions = false;
+    }
     this.loggingIn = !this.loggingIn;
   }
   toggleShowUserOptions = ():void => {
+    if(this.loggingIn && !this.showUserOptions) {
+      this.loggingIn = false;
+    }
     this.showUserOptions = !this.showUserOptions;
   }
   userLogout = ():void => {

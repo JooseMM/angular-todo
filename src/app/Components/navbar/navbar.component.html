@@ -3,21 +3,19 @@
   | md:w-auto md:mx-desktop-margin
   | lg:m-0 lg:py-10 lg:w-auto lg:px-[10%] "
   [ngClass]="isAboutPage ? 'lg:split-navbar-bg' : '' " >
-  <a
-    *ngIf="menuOpen == false"
-    class="font-bold text-lg text-very-dark-blue | lg:text-xl"
-    routerLink="/"
-  >
+  <a class="font-bold text-lg text-very-dark-blue | lg:text-xl"
+    routerLink="/">
     Todo App
   </a>
 
   <!-- Mobile navigation menu -->
 
-  <ul *ngIf="menuOpen" class="flex space-x-[10vw] text-very-dark-blue items-center | lg:hidden">
+  <ul *ngIf="menuOpen" class="bg-dark-blue z-10 text-white/80 px-10 py-6 space-y-3 rounded-md flex absolute flex-col right-0 top-[160%]
+     items-center | lg:hidden">
     <li>
       <a
         routerLink="/home"
-        routerLinkActive="font-bold"
+        routerLinkActive="font-bold text-white/100"
         (click)="mobileMenuToggle()"
         >Inicio</a
       >
@@ -25,7 +23,7 @@
     <li>
       <a
         routerLink="/application"
-        routerLinkActive="font-bold"
+        routerLinkActive="font-bold text-white/100"
         (click)="mobileMenuToggle()"
         >App</a
       >
@@ -33,34 +31,14 @@
     <li>
       <a
         routerLink="/about"
-        routerLinkActive="font-bold"
+        routerLinkActive="font-bold text-white/100"
         (click)="mobileMenuToggle()"
         >Nosotros</a
       >
     </li>
-    <li class="relative items-center hidden">
-        <ng-container *ngIf="userLoggedIn; else elseImg">
-        <img src="../../../assets/Images/profile-pic.svg" width="40" height="40" alt="Foto de perfil"(click)="toggleShowUserOptions()" />
-        </ng-container>
-        <ng-template #elseImg >
-          <svg width="30" height="30" (click)="toggleShowUserOptions()" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 12.5C17.7614 12.5 20 10.2614 20 7.5C20 4.73858 17.7614 2.5 15 2.5C12.2386 2.5 10 4.73858 10 7.5C10 10.2614 12.2386 12.5 15 12.5Z"
-            fill="#263140"/>
-            <path d="M25 21.875C25 24.9816 25 27.5 15 27.5C5 27.5 5 24.9816 5 21.875C5 18.7684 9.47715 16.25 15 16.25C20.5229 16.25 25 18.7684 25 21.875Z"
-           fill="#263140"/>
-          </svg>
-          <svg width="30" height="30" (click)="toggleShowUserOptions()"
-            class="transition duration-200 translate-x-[-20%]"
-            [ngClass]="showUserOptions ? 'rotate-180' : '' "
-            viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.35 14.3167L20 21.95L27.65 14.3167L30 16.6667L20 26.6667L10 16.6667L12.35 14.3167Z"
-            fill="#273746"/>
-          </svg>
-        </ng-template>
-        <button *ngIf="showUserOptions && !userLoggedIn && !loggingIn" (click)="toggleUserLoggingIn()"
-          class="whitespace-nowrap text-white bg-very-dark-blue absolute right-0 bottom-[-160%] font-bold  px-6 py-2 rounded-md">Iniciar Sesion</button>
-        <button *ngIf="showUserOptions && userLoggedIn && !loggingIn" (click)="userLogout()"
-          class="whitespace-nowrap absolute text-white right-0 bg-very-dark-blue bottom-[-120%] font-bold px-6 py-2 rounded-md ">Cerrar Sesion</button>
+    <li class="relative items-center lg:hidden">
+      <button *ngIf="userLoggedIn" (click)="userLogout()">Cerrar Sesion</button>
+      <button *ngIf="!userLoggedIn" (click)="toggleUserLoggingIn()">Iniciar Sesion</button>
     </li>
   </ul>
   <button (click)="mobileMenuToggle()">
@@ -71,17 +49,17 @@
       [class.ml-4]="menuOpen"
     />
   </button>
-      <form *ngIf="loggingIn && !showUserOptions" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
-        class="flex-col z-10 text-white bg-very-dark-blue rounded-md px-6 py-5 absolute flex
-        top-[150%] left-2 right-2 mx-auto max-w-xs shadow-2xl | lg:hidden">
-        <h3 class="font-bold text-lg">Iniciar Sesion</h3>
-        <button (click)="toggleUserLoggingIn()" class="absolute right-5 top-4">
+      <form *ngIf="loggingIn && !menuOpen" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
+        class="active-form outline outline-light-blue/30 outline-1 flex-col z-10 text-white bg-very-dark-blue rounded-md px-6 py-8 absolute flex
+        top-[150%] left-0 right-0 mx-auto max-w-sm shadow-2xl  | lg:hidden">
+        <h3 class="font-bold text-xl">Iniciar Sesion</h3>
+        <button (click)="toggleUserLoggingIn()" class="absolute right-5 top-6">
           <svg width="20" height="20" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M25 2.5335L22.4821 0L12.5 10.0441L2.51786 0L0 2.5335L9.98214 12.5776L0 22.6218L2.51786 25.1553L12.5 15.1111L22.4821 25.1553L25 22.6218L15.0179 12.5776L25 2.5335Z" fill="#FFF"/>
           </svg>
         </button>
           <input type="text" name="username"
-          class="w-full rounded py-1 px-3 mt-1 relative text-very-dark-blue"
+          class="w-full rounded py-2 text-lg px-3 mt-2 relative text-very-dark-blue"
           required
           placeholder="Nombre de usuario"
           [(ngModel)]="username"
@@ -89,7 +67,7 @@
           />
           <small class="text-red-400" *ngIf="userError.errors?.['required'] && (userError.dirty || userError.touched)">Ingresa un usuario</small>
         <input type="password" name="password"
-        class="rounded py-1 px-3 text-very-dark-blue"
+          class="w-full rounded py-2 text-lg px-3 mt-1 relative text-very-dark-blue"
         [ngClass]="userError.errors?.['required'] && (userError.dirty || userError.touched) ? 'mt-1' : 'mt-3' "
         placeholder="Contraseña"
         required
@@ -99,7 +77,7 @@
         <small *ngIf="passError.errors?.['required'] && (passError.dirty || passError.touched)" class="text-red-400">Usuario o contraseña incorrecta</small>
         <div class="flex items-start justify-between">
           <a routerLink="/about"><small class="opacity-70">Olvide mi contraseña</small></a>
-            <button type="submit" [disabled]="form.invalid" (click)="toggleShowUserOptions()" class="bg-orange-btn text-base font-bold px-4 py-1 rounded mt-3 | lg:px-6">Ingresar</button>
+            <button type="submit" [disabled]="form.invalid" (click)="toggleShowUserOptions()" class="bg-orange-btn text-lg font-bold px-8 py-2 rounded mt-4 disabled:opacity-50 ">Ingresar</button>
         </div>
       </form>
 
@@ -139,18 +117,8 @@
     <div>
       <div class="hidden | relative lg:flex lg:cursor-pointer lg:items-center" >
 
-        <ng-container *ngIf="userLoggedIn; else elseImg">
-        <img src="../../../assets/Images/profile-pic.svg" width="50" height="50" alt="Foto de perfil"(click)="toggleShowUserOptions()" />
-        </ng-container>
-        <ng-template #elseImg >
-          <svg width="40" height="40" (click)="toggleShowUserOptions()" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 12.5C17.7614 12.5 20 10.2614 20 7.5C20 4.73858 17.7614 2.5 15 2.5C12.2386 2.5 10 4.73858 10 7.5C10 10.2614 12.2386 12.5 15 12.5Z"
-            [attr.fill]="isAboutPage ? '#fff' : '#263140' "/>
-            <path d="M25 21.875C25 24.9816 25 27.5 15 27.5C5 27.5 5 24.9816 5 21.875C5 18.7684 9.47715 16.25 15 16.25C20.5229 16.25 25 18.7684 25 21.875Z"
-            [attr.fill]="isAboutPage ? '#fff' : '#263140' "/>
-          </svg>
-        </ng-template>
-        <svg width="30" height="30" [class.lg:ml-2]="userLoggedIn" (click)="toggleShowUserOptions()"
+        <img src="../../../assets/Images/profile-pic.svg"  width="50" height="50" alt="Foto de perfil"(click)="toggleShowUserOptions()" />
+        <svg width="30" height="30"  (click)="toggleShowUserOptions()"
           class="transition duration-200"
           [ngClass]="showUserOptions ? 'rotate-180' : '' "
           viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,13 +129,13 @@
         <button *ngIf="showUserOptions && !userLoggedIn" (click)="toggleUserLoggingIn()"
           [ngClass]="isAboutPage ? 'text-very-dark-blue bg-light-blue' : 'bg-very-dark-blue text-white' "
           class="whitespace-nowrap absolute right-0  font-bold  px-6 py-2 rounded-md
-          | lg:bottom-[-135%]">Iniciar Sesion</button>
+          | lg:bottom-[-120%]">Iniciar Sesion</button>
         <button *ngIf="showUserOptions && userLoggedIn" (click)="userLogout()"
           [ngClass]="isAboutPage ? 'text-very-dark-blue bg-light-blue' : 'bg-very-dark-blue text-white' "
           class="whitespace-nowrap absolute -bottom-full right-0 font-bold px-6 py-2 rounded-md
-          | lg:bottom-[-110%]">Cerrar Sesion</button>
+          | lg:bottom-[-120%]">Cerrar Sesion</button>
       </div>
-      <form *ngIf="loggingIn && showUserOptions" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
+      <form *ngIf="loggingIn && !showUserOptions" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
         class="flex-col w-[300] z-10 text-white bg-very-dark-blue rounded-md px-6 py-5 absolute top-24 hidden
         | lg:flex lg:top-auto lg:bottom-[-135%] lg:right-[10%] lg:w-[300px] shadow-2xl">
         <h3 class="font-bold text-lg">Iniciar Sesion</h3>
@@ -195,7 +163,7 @@
         <small *ngIf="passError.errors?.['required'] && (passError.dirty || passError.touched)" class="text-red-400">Usuario o contraseña incorrecta</small>
         <div class="flex items-start justify-between">
           <a routerLink="/about"><small class="opacity-70">Olvide mi contraseña</small></a>
-            <button type="submit" [disabled]="form.invalid" (click)="toggleShowUserOptions()" class="bg-orange-btn text-base font-bold px-4 py-1 rounded mt-3 | lg:px-6">Ingresar</button>
+            <button type="submit" [disabled]="form.invalid" (click)="toggleShowUserOptions()" class="bg-orange-btn text-base font-bold invalid:opacity-50 py-1 rounded mt-3 px-6">Ingresar</button>
         </div>
       </form>
     </div>

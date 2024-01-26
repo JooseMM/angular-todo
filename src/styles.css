@@ -31,5 +31,10 @@ html {
   .split-navbar-bg {
     background: linear-gradient(to left, #394D60 50%, #DEE6ED 50%);
   }
+  .active-form {
+    -webkit-box-shadow: 0px 0px 3000px 20000px rgba(0,0,0,0.56);
+    -moz-box-shadow: 0px 0px 3000px 20000px rgba(0,0,0,0.56);
+    box-shadow: 0px 0px 3000px 20000px rgba(0,0,0,0.56);
+  }
 
 }
