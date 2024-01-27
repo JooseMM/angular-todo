@@ -100,7 +100,7 @@ export class DataService {
           this.setId(tempId, response.insertedId)
           this.notifications.next(`Operacion exitosa: ${response.modifiedCount} tarea creada.`);
         } else {
-          this.notifications.next(`Operacion fallida: Codigo ${response.status}`);
+          this.notifications.next(`Operacion fallida: Codigo ${response.msg}`);
         }
       });
     }
