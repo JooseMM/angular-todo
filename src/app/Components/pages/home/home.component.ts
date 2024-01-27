@@ -6,10 +6,4 @@ import { DataService } from 'src/app/data.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  response = '';
-  constructor(private dataService: DataService){
-     this.dataService.getNotifications()
-     .subscribe((res)=> this.response = res);
-
-  }
 }
