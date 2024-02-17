@@ -77,7 +77,10 @@
         <small *ngIf="passError.errors?.['required'] && (passError.dirty || passError.touched)" class="text-red-400">Usuario o contraseña incorrecta</small>
         <div class="flex items-start justify-between">
           <a routerLink="/about"><small class="opacity-70">Olvide mi contraseña</small></a>
-            <button type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)" class="bg-orange-btn text-lg font-bold px-8 py-2 rounded mt-4 disabled:opacity-50 ">Ingresar</button>
+            <button type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)" class="bg-orange-btn flex justify-center items-center text-base font-bold invalid:opacity-50 py-1 rounded mt-3 w-28 h-8">
+              <img *ngIf="loading; else elseSpan" class="animate-spin" width="20" height="20" src="../../../assets/Icons/loader.svg" />
+              <ng-template #elseSpan >Ingresar</ng-template>
+            </button>
         </div>
       </form>
 
@@ -137,7 +140,7 @@
       </div>
       <form *ngIf="loggingIn && !showUserOptions" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
         class="flex-col w-[300] z-10 text-white bg-very-dark-blue rounded-md px-6 py-5 absolute top-24 hidden
-        | lg:flex lg:top-auto lg:bottom-[-135%] lg:right-[10%] lg:w-[300px] shadow-2xl">
+        | lg:flex lg:top-auto lg:bottom-[-11rem] lg:right-[10%] lg:w-[300px] shadow-2xl">
         <h3 class="font-bold text-lg">Iniciar Sesion</h3>
         <button (click)="toggleUserLoggingIn()" class="absolute right-5 top-4">
           <svg width="20" height="20" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -163,7 +166,10 @@
         <small *ngIf="passError.errors?.['required'] && (passError.dirty || passError.touched)" class="text-red-400">Usuario o contraseña incorrecta</small>
         <div class="flex items-start justify-between">
           <a routerLink="/about"><small class="opacity-70">Olvide mi contraseña</small></a>
-            <button type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)" class="bg-orange-btn text-base font-bold invalid:opacity-50 py-1 rounded mt-3 px-6">Ingresar</button>
+            <button type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)" class="bg-orange-btn flex justify-center items-center text-base font-bold invalid:opacity-50 py-1 rounded mt-3 w-28 h-8 hover:bg-dark-blue">
+              <img *ngIf="loading; else elseSpan" class="animate-spin" width="20" height="20" src="../../../assets/Icons/loader.svg" />
+              <ng-template #elseSpan >Ingresar</ng-template>
+            </button>
         </div>
       </form>
     </div>

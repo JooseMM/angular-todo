@@ -50,20 +50,31 @@ export class DataService {
   }
   userLogin = (payload: HttpPostLogin) => {
     this.http.post<UserLoggedIn>(`${environment.API_URL}login`, payload, { withCredentials: true})
-        .subscribe((response: UserLoggedIn) => {
+        .subscribe({
+          next: (response: UserLoggedIn) => {
           if(response.userLoggedIn) {
           this.userLoggedIn.next(true);
           this.notifications.next(`Bienvenido, ${response.user}`);
         }
+          },
+          error: () => {
+            this.notifications.next("Operacion fallida");
+          }
       });
   };
   userLogout = () => {
     this.http.get<UserLoggedIn>(`${environment.API_URL}logout`, { withCredentials: true})
-      .subscribe((response: UserLoggedIn) => {
-        if(response.ok) {
-          this.userLoggedIn.next(false);
-          this.notifications.next("Usuario cerro sesion exitosamente");
+      .subscribe({
+        next: (response: UserLoggedIn) => {
+          if(response.ok) {
+            this.userLoggedIn.next(false);
+            this.notifications.next("Usuario cerro sesion exitosamente");
+          }
+        },
+        error: () => {
+          this.notifications.next("Operacion fallida, razon desconocida");
         }
+
       });
   };
   setId = (tempID: string, ID: string):void => {

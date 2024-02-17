@@ -18,9 +18,12 @@ export class NavbarComponent implements OnInit {
   knownUserPicture = "../../../assets/Images/profile-pic.svg";
   username = '';
   password = '';
+  loading = false;
+  notificationSubscription?: Subscription;
 
   constructor(public router: Router, private dataService: DataService) {
     this.isAboutPage = false
+
   }
   ngOnInit(): void {
     this.router.events.subscribe(():void => {
@@ -30,10 +33,19 @@ export class NavbarComponent implements OnInit {
     });
     this.userCheckSubscription = this.dataService.getCurrentUser()
         .subscribe((isUserLoggedIn: boolean) => this.userLoggedIn = isUserLoggedIn );
+    this.notificationSubscription = this.dataService.getNotifications().subscribe({
+      next: () => {
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
   }
   onSubmit = (payload: { username: string, password: string }) => {
     this.dataService.userLogin(payload);
-    this.toggleUserLoggingIn();
+    //this.toggleUserLoggingIn();
+    this.loading = true;
   }
   toggleUserLoggingIn = ():void => {
     if(this.menuOpen) {
