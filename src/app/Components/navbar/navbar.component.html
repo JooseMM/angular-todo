@@ -1,7 +1,7 @@
 <nav
   class="relative my-10 w-[80%] mx-auto flex justify-between items-center
   | md:w-auto md:mx-desktop-margin
-  | lg:m-0 lg:py-10 lg:w-auto lg:px-[10%] "
+  | lg:m-0 lg:py-7 lg:w-auto lg:px-[10%] 2xl:py-10"
   [ngClass]="isAboutPage ? 'lg:split-navbar-bg' : '' " >
   <a class="font-bold text-lg text-very-dark-blue | lg:text-xl"
     routerLink="/">
@@ -117,7 +117,7 @@
     <div>
       <div class="hidden | relative lg:flex lg:cursor-pointer lg:items-center" >
 
-        <img src="../../../assets/Images/profile-pic.svg"  width="50" height="50" alt="Foto de perfil"(click)="toggleShowUserOptions()" />
+        <img src="../../../assets/Images/profile-pic.svg"  width="40" height="40" alt="Foto de perfil"(click)="toggleShowUserOptions()" />
         <svg width="30" height="30"  (click)="toggleShowUserOptions()"
           class="transition duration-200"
           [ngClass]="showUserOptions ? 'rotate-180' : '' "
