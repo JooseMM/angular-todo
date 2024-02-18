@@ -55,12 +55,14 @@ export class DataService {
           if(response.userLoggedIn) {
           this.userLoggedIn.next(true);
           this.notifications.next(`Bienvenido, ${response.user}`);
+          return;
         }
+        this.notifications.next('Operacion fallida, credenciales incorrectas');
           },
           error: () => {
             this.notifications.next("Operacion fallida");
           }
-      });
+        });
   };
   userLogout = () => {
     this.http.get<UserLoggedIn>(`${environment.API_URL}logout`, { withCredentials: true})
