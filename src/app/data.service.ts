@@ -60,7 +60,7 @@ export class DataService {
         this.notifications.next('Operacion fallida, credenciales incorrectas');
           },
           error: () => {
-            this.notifications.next("Operacion fallida");
+        this.notifications.next('Operacion fallida, problemas de conexion con servidor');
           }
         });
   };

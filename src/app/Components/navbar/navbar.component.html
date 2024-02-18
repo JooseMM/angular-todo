@@ -1,29 +1,34 @@
 <nav
   class="relative my-8 w-[80%] mx-auto flex justify-between items-center
   | md:w-auto md:mx-desktop-margin
-  | lg:m-0 lg:py-7 lg:w-auto lg:px-[10%] 2xl:py-10"
+  | lg:m-0 lg:py-10 lg:w-auto lg:px-[10%] 2xl:py-10"
   [ngClass]="isAboutPage ? 'lg:split-navbar-bg' : '' " >
   <a class="font-bold text-lg text-very-dark-blue | lg:text-xl"
     routerLink="/">
     Todo App
   </a>
 
-  <!-- Mobile navigation menu -->
+  <div class="flex space-x-16">
+  <ul class="hidden bg-dark-blue z-10 px-14 py-10 space-y-10 text-xl text-white/80 rounded-md absolute flex-col
+    right-0 top-[160%] items-center
+    | lg:flex lg:flex-row lg:text-base lg:static lg:space-y-0 lg:p-0 lg:bg-inherit lg:space-x-14"
+      [style]="menuOpen ? 'display: flex' : '' "
+      [ngClass]="isAboutPage ? 'lg:text-white/80' : 'lg:text-very-dark-blue/70' ">
 
-  <ul *ngIf="menuOpen" class="bg-dark-blue z-10 text-white/80 px-14 py-10 space-y-10 text-xl rounded-md flex absolute flex-col right-0 top-[160%]
-     items-center | lg:hidden">
     <li>
       <a
+        [ngClass]="isAboutPage ? 'lg:hover:text-white/100':'lg:hover:text-very-dark-blue/100' "
         routerLink="/home"
-        routerLinkActive="font-bold text-white/100"
+        routerLinkActive="font-bold"
         (click)="mobileMenuToggle()"
         >Inicio</a
       >
     </li>
     <li>
       <a
+        [ngClass]="isAboutPage ? 'lg:hover:text-white/100':'lg:hover:text-very-dark-blue/100' "
         routerLink="/application"
-        routerLinkActive="font-bold text-white/100"
+        routerLinkActive="font-bold"
         (click)="mobileMenuToggle()"
         >App</a
       >
@@ -31,6 +36,7 @@
     <li>
       <a
         routerLink="/about"
+        [ngClass]="isAboutPage ? 'lg:hover:text-white/100':'lg:hover:text-very-dark-blue/100' "
         routerLinkActive="font-bold text-white/100"
         (click)="mobileMenuToggle()"
         >Nosotros</a
@@ -41,51 +47,7 @@
       <button *ngIf="!userLoggedIn" (click)="toggleUserLoggingIn()">Iniciar Sesion</button>
     </li>
   </ul>
-      <app-login-form *ngIf="loggingIn" (toggleComponentView)="toggleFromChild()" ></app-login-form>
-  <button (click)="mobileMenuToggle()">
-    <img
-      [src]="!menuOpen ? '../../assets/Icons/menu-icon.svg' : '../../assets/Icons/menu-icon-close.svg'"
-      alt="hamburguer menu"
-      class="w-8 h-6 ml-4 | lg:hidden"
-      [class.ml-4]="menuOpen"
-    />
-  </button>
-
-  <!-- Desktop navigation menu -->
-  <div class="hidden items-center justify-between w-2/5 | lg:flex">
-    <ul class="hidden md:flex gap-14"
-    [ngClass]="isAboutPage ? 'text-white/80' : 'text-very-dark-blue/70' "
-    >
-    <li>
-      <a
-      class="transition duration-200"
-      [ngClass]="isAboutPage ? 'hover:text-white/100':'hover:text-very-dark-blue/100' "
-      routerLink="/home"
-      routerLinkActive="font-bold text-very-dark-blue/100">
-        Inicio
-      </a>
-    </li>
-    <li>
-      <a
-      class="transition duration-200"
-      [ngClass]="isAboutPage ? 'hover:text-white/100':'hover:text-very-dark-blue/100' "
-      routerLink="/application"
-      routerLinkActive="font-bold text-very-dark-blue/100">
-        App
-      </a>
-    </li>
-    <li>
-      <a
-      class="transition duration-200"
-      [ngClass]="isAboutPage ? 'hover:text-white/100':'hover:text-very-dark-blue/100' "
-      routerLink="/about"
-      routerLinkActive="font-bold text-white/100">
-        Nosotros
-      </a>
-    </li>
-    </ul>
-    <div>
-      <div class="hidden | relative lg:flex lg:cursor-pointer lg:items-center" >
+      <div class="hidden relative lg:flex lg:cursor-pointer lg:items-center" >
 
         <img src="../../../assets/Images/profile-pic.svg"  width="40" height="40" alt="Foto de perfil"(click)="toggleShowUserOptions()" />
         <svg width="30" height="30"  (click)="toggleShowUserOptions()"
@@ -105,7 +67,15 @@
           class="whitespace-nowrap absolute -bottom-full right-0 font-bold px-6 py-2 rounded-md
           | lg:bottom-[-120%]">Cerrar Sesion</button>
       </div>
-      <app-login-form *ngIf="loggingIn" (toggleComponentView)="toggleFromChild()" ></app-login-form>
-    </div>
   </div>
+  <button (click)="mobileMenuToggle()" class="lg:hidden">
+    <img
+      [src]="!menuOpen ? '../../assets/Icons/menu-icon.svg' : '../../assets/Icons/menu-icon-close.svg'"
+      alt="hamburguer menu"
+      class="w-8 h-6 ml-4"
+      [class.ml-4]="menuOpen"
+    />
+  </button>
+  <app-login-form *ngIf="loggingIn" (toggleComponentView)="toggleFromChild()" class="absolute z-10 top-[150%] left-0 right-0"></app-login-form>
 </nav>
+

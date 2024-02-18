@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
   selector: 'app-login-form',
   template: `
       <form #form="ngForm" (ngSubmit)="onSubmit(form.value)"
-        class="active-form outline outline-light-blue/30 outline-1 flex-col z-10 text-white bg-very-dark-blue rounded-md px-6 py-8 absolute flex
-         top-[150%] left-0 right-0 mx-auto max-w-sm shadow-2xl  ">
+        class="active-form outline outline-light-blue/30 outline-1 flex-col relative text-white bg-very-dark-blue rounded-md px-6 py-8 flex
+          mx-auto max-w-sm shadow-2xl">
         <h3 class="font-bold text-xl">Iniciar Sesion</h3>
         <button type="button" (click)="toggleComponent()" class="absolute right-5 top-6">
           <svg width="20" height="20" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@ export class LoginFormComponent implements OnInit {
     });
   }
   toggleComponent() {
+    console.log("execute toggle");
     this.toggleComponentView.emit();
-
   }
 }
