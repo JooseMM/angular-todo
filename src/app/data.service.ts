@@ -65,12 +65,13 @@ export class DataService {
         });
   };
   userLogout = () => {
+    const currentTime = new Date().getTime();
     const headers = new HttpHeaders ({
       'Cache-Control': 'no-cache',
       'Pragma': 'no-cache',
       'Expires': '0'
     });
-    this.http.delete<UserLoggedIn>(`${environment.API_URL}logout`, { headers: headers, withCredentials: true})
+    this.http.delete<UserLoggedIn>(`${environment.API_URL}logout/${currentTime}`, { headers: headers, withCredentials: true})
       .subscribe({
         next: (response: UserLoggedIn) => {
           if(response.ok) {
