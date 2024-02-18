@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Task, CreateResponse, UserLoggedIn, HttpGetTasks, HttpPostLogin, ModifiedResponse } from './list-type';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
@@ -65,7 +65,11 @@ export class DataService {
         });
   };
   userLogout = () => {
-    this.http.get<UserLoggedIn>(`${environment.API_URL}logout`, { withCredentials: true})
+    const headers = new HttpHeaders ({
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
+    });
+    this.http.get<UserLoggedIn>(`${environment.API_URL}logout`, { headers: headers, withCredentials: true})
       .subscribe({
         next: (response: UserLoggedIn) => {
           if(response.ok) {
