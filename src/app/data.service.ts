@@ -69,6 +69,7 @@ export class DataService {
           if(response.ok) {
             this.userLoggedIn.next(false);
             this.notifications.next("Usuario cerro sesion exitosamente");
+            this.dataBase.next([]);
           }
         },
         error: () => {

@@ -1,5 +1,5 @@
 <nav
-  class="relative my-10 w-[80%] mx-auto flex justify-between items-center
+  class="relative my-8 w-[80%] mx-auto flex justify-between items-center
   | md:w-auto md:mx-desktop-margin
   | lg:m-0 lg:py-7 lg:w-auto lg:px-[10%] 2xl:py-10"
   [ngClass]="isAboutPage ? 'lg:split-navbar-bg' : '' " >
@@ -10,7 +10,7 @@
 
   <!-- Mobile navigation menu -->
 
-  <ul *ngIf="menuOpen" class="bg-dark-blue z-10 text-white/80 px-10 py-6 space-y-3 rounded-md flex absolute flex-col right-0 top-[160%]
+  <ul *ngIf="menuOpen" class="bg-dark-blue z-10 text-white/80 px-14 py-10 space-y-10 text-xl rounded-md flex absolute flex-col right-0 top-[160%]
      items-center | lg:hidden">
     <li>
       <a
@@ -41,6 +41,7 @@
       <button *ngIf="!userLoggedIn" (click)="toggleUserLoggingIn()">Iniciar Sesion</button>
     </li>
   </ul>
+      <app-login-form *ngIf="loggingIn" (toggleComponentView)="toggleFromChild()" ></app-login-form>
   <button (click)="mobileMenuToggle()">
     <img
       [src]="!menuOpen ? '../../assets/Icons/menu-icon.svg' : '../../assets/Icons/menu-icon-close.svg'"
@@ -49,40 +50,6 @@
       [class.ml-4]="menuOpen"
     />
   </button>
-      <form *ngIf="loggingIn && !menuOpen" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
-        class="active-form outline outline-light-blue/30 outline-1 flex-col z-10 text-white bg-very-dark-blue rounded-md px-6 py-8 absolute flex
-        top-[150%] left-0 right-0 mx-auto max-w-sm shadow-2xl  | lg:hidden">
-        <h3 class="font-bold text-xl">Iniciar Sesion</h3>
-        <button (click)="toggleUserLoggingIn()" class="absolute right-5 top-6">
-          <svg width="20" height="20" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M25 2.5335L22.4821 0L12.5 10.0441L2.51786 0L0 2.5335L9.98214 12.5776L0 22.6218L2.51786 25.1553L12.5 15.1111L22.4821 25.1553L25 22.6218L15.0179 12.5776L25 2.5335Z" fill="#FFF"/>
-          </svg>
-        </button>
-          <input type="text" name="username"
-          class="w-full rounded py-2 text-lg px-3 mt-2 relative text-very-dark-blue"
-          required
-          placeholder="Nombre de usuario"
-          [(ngModel)]="username"
-          #userError="ngModel"
-          />
-          <small class="text-red-400" *ngIf="userError.errors?.['required'] && (userError.dirty || userError.touched)">Ingresa un usuario</small>
-        <input type="password" name="password"
-          class="w-full rounded py-2 text-lg px-3 mt-1 relative text-very-dark-blue"
-        [ngClass]="userError.errors?.['required'] && (userError.dirty || userError.touched) ? 'mt-1' : 'mt-3' "
-        placeholder="Contraseña"
-        required
-        [(ngModel)]="password"
-        #passError="ngModel"
-        />
-        <small *ngIf="passError.errors?.['required'] && (passError.dirty || passError.touched)" class="text-red-400">Usuario o contraseña incorrecta</small>
-        <div class="flex items-start justify-between">
-          <a routerLink="/about"><small class="opacity-70">Olvide mi contraseña</small></a>
-            <button type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)" class="bg-orange-btn flex justify-center items-center text-base font-bold invalid:opacity-50 py-1 rounded mt-3 w-28 h-8">
-              <img *ngIf="loading; else elseSpan" class="animate-spin" width="20" height="20" src="../../../assets/Icons/loader.svg" />
-              <ng-template #elseSpan >Ingresar</ng-template>
-            </button>
-        </div>
-      </form>
 
   <!-- Desktop navigation menu -->
   <div class="hidden items-center justify-between w-2/5 | lg:flex">
@@ -138,40 +105,7 @@
           class="whitespace-nowrap absolute -bottom-full right-0 font-bold px-6 py-2 rounded-md
           | lg:bottom-[-120%]">Cerrar Sesion</button>
       </div>
-      <form *ngIf="loggingIn && !showUserOptions" #form="ngForm" (ngSubmit)="onSubmit(form.value)"
-        class="flex-col w-[300] z-10 text-white bg-very-dark-blue rounded-md px-6 py-5 absolute top-24 hidden
-        | lg:flex lg:top-auto lg:bottom-[-11rem] lg:right-[10%] lg:w-[300px] shadow-2xl">
-        <h3 class="font-bold text-lg">Iniciar Sesion</h3>
-        <button (click)="toggleUserLoggingIn()" class="absolute right-5 top-4">
-          <svg width="20" height="20" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M25 2.5335L22.4821 0L12.5 10.0441L2.51786 0L0 2.5335L9.98214 12.5776L0 22.6218L2.51786 25.1553L12.5 15.1111L22.4821 25.1553L25 22.6218L15.0179 12.5776L25 2.5335Z" fill="#FFF"/>
-          </svg>
-        </button>
-          <input type="text" name="username"
-          class="w-full rounded py-1 px-3 mt-1 relative text-very-dark-blue"
-          required
-          placeholder="Nombre de usuario"
-          [(ngModel)]="username"
-          #userError="ngModel"
-          />
-          <small class="text-red-400" *ngIf="userError.errors?.['required'] && (userError.dirty || userError.touched)">Ingresa un usuario</small>
-        <input type="password" name="password"
-        class="rounded py-1 px-3 text-very-dark-blue"
-        [ngClass]="userError.errors?.['required'] && (userError.dirty || userError.touched) ? 'mt-1' : 'mt-3' "
-        placeholder="Contraseña"
-        required
-        [(ngModel)]="password"
-        #passError="ngModel"
-        />
-        <small *ngIf="passError.errors?.['required'] && (passError.dirty || passError.touched)" class="text-red-400">Usuario o contraseña incorrecta</small>
-        <div class="flex items-start justify-between">
-          <a routerLink="/about"><small class="opacity-70">Olvide mi contraseña</small></a>
-            <button type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)" class="bg-orange-btn flex justify-center items-center text-base font-bold invalid:opacity-50 py-1 rounded mt-3 w-28 h-8 hover:bg-dark-blue">
-              <img *ngIf="loading; else elseSpan" class="animate-spin" width="20" height="20" src="../../../assets/Icons/loader.svg" />
-              <ng-template #elseSpan >Ingresar</ng-template>
-            </button>
-        </div>
-      </form>
+      <app-login-form *ngIf="loggingIn" (toggleComponentView)="toggleFromChild()" ></app-login-form>
     </div>
   </div>
 </nav>

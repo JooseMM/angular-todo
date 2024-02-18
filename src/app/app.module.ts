@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { AboutComponent } from './Components/pages/about/about.component';
 import { TaskListComponent } from './Components/task-list/task-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginFormComponent } from './Components/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     ApplicationComponent,
     AboutComponent,
     TaskListComponent,
+    LoginFormComponent,
   ],
   imports: [HttpClientModule, BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

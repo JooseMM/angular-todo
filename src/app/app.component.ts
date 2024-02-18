@@ -8,10 +8,10 @@ import { DataService } from './data.service';
     ><app-footer></app-footer>`
 })
 export class AppComponent {
-  notificationSubscription: Subscription;
+ // notificationSubscription: Subscription;
   constructor(private dataServe: DataService){
-    this.notificationSubscription = dataServe.getNotifications().subscribe((message: string)=>{
-     if(message != '') { console.log("Notification: " + message); }
-    });
+//    this.notificationSubscription = dataServe.getNotifications().subscribe((message: string)=>{
+//     if(message != '') { console.log("Notification: " + message); }
+//    });
   }
 }
