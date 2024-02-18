@@ -70,7 +70,7 @@ export class DataService {
       'Pragma': 'no-cache',
       'Expires': '0'
     });
-    this.http.get<UserLoggedIn>(`${environment.API_URL}logout`, { headers: headers, withCredentials: true})
+    this.http.post<UserLoggedIn>(`${environment.API_URL}logout`, { headers: headers, withCredentials: true})
       .subscribe({
         next: (response: UserLoggedIn) => {
           if(response.ok) {
