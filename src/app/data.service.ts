@@ -68,6 +68,7 @@ export class DataService {
     const headers = new HttpHeaders ({
       'Cache-Control': 'no-cache',
       'Pragma': 'no-cache',
+      'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
     });
     this.http.get<UserLoggedIn>(`${environment.API_URL}logout`, { headers: headers, withCredentials: true})
       .subscribe({
