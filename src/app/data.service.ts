@@ -66,14 +66,10 @@ export class DataService {
   };
   userLogout = () => {
     const currentTime = new Date().getTime();
-    const headers = new HttpHeaders ({
-      'Cache-Control': 'no-cache',
-      'Pragma': 'no-cache',
-      'Expires': '0'
-    });
-    this.http.post<UserLoggedIn>(`${environment.API_URL}logout/${currentTime}`, { headers: headers, withCredentials: true})
+    this.http.post<UserLoggedIn>(`${environment.API_URL}logout/${currentTime}`, { withCredentials: true})
       .subscribe({
         next: (response: UserLoggedIn) => {
+          console.log(response);
           if(response.ok) {
             this.userLoggedIn.next(false);
             this.notifications.next("Usuario cerro sesion exitosamente");
