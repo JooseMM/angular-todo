@@ -66,7 +66,7 @@ export class DataService {
   };
   userLogout = () => {
     const currentTime = new Date().getTime();
-    this.http.post<UserLoggedIn>(`${environment.API_URL}logout/${currentTime}`, { withCredentials: true})
+    this.http.post<UserLoggedIn>(`${environment.API_URL}logout/${currentTime}`, { date: currentTime }, { withCredentials: true})
       .subscribe({
         next: (response: UserLoggedIn) => {
           console.log(response);
